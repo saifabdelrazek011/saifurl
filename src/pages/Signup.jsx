@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useUserContext } from "../contexts/dashboard.context";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1/auth";
@@ -10,6 +11,12 @@ function Signup() {
   const errorRegion = document.getElementById("error-region");
   if (errorRegion) {
     errorRegion.innerHTML = ""; // Clear any previous error messages
+  }
+
+  const user = useUserContext();
+  if (user) {
+    window.location.href = "/dashboard";
+    return null; // Prevent rendering if user is already logged in
   }
 
   const handleSignup = async (event) => {
@@ -29,7 +36,7 @@ function Signup() {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ firstName, lastName, email, password }),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
