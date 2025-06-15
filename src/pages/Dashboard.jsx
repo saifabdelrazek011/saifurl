@@ -1,20 +1,21 @@
 import { useState, useEffect } from "react";
-import { useUserContext } from "../contexts/DashboardContext.jsx";
+import { useDashboardContext } from "../contexts/DashboardContext.jsx";
 import Shorturls from "./ShortUrls.jsx";
 import { useNavigate } from "react-router-dom";
+import { ShorturlsProvider } from "../contexts/ShorturlsContext.jsx";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
 
 function Dashboard() {
-  const context = useUserContext();
+  const context = useDashboardContext();
   const navigate = useNavigate();
   const [userData, setUserData] = useState(context?.userData);
   const [user, setUser] = useState(null);
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const { theme, setTheme } = useDashboardContext() || "light";
 
   if (!context) {
-    throw new Error("Dashboard must be used within a UserContextProvider");
+    throw new Error("Dashboard must be used within a DashboardContextProvider");
   }
 
   useEffect(() => {
@@ -96,7 +97,9 @@ function Dashboard() {
           </div>
         </div>
 
-        <Shorturls theme={theme} />
+        <ShorturlsProvider>
+          <Shorturls />
+        </ShorturlsProvider>
       </div>
     </div>
   );

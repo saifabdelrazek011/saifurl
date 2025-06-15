@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUserContext } from "../../contexts/DashboardContext";
+import { useDashboardContext } from "../../contexts/DashboardContext";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1/auth";
@@ -12,7 +12,7 @@ function Signup() {
   if (errorRegion) {
     errorRegion.innerHTML = ""; // Clear any previous error messages
   }
-  const userData = useUserContext()?.userData;
+  const userData = useDashboardContext()?.userData;
   if (userData) {
     window.location.href = "/dashboard";
     return null; // Prevent rendering if user is already logged in
@@ -76,7 +76,9 @@ function Signup() {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Sign Up to <span className="text-blue-600">SaifURL</span>
+        </h2>
         {errorMessage && (
           <div id="error-region" className="mb-4">
             <p className="text-red-500">{errorMessage}</p>

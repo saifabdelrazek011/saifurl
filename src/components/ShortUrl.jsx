@@ -1,7 +1,8 @@
 import React from "react";
+import { useDashboardContext } from "../contexts/DashboardContext";
 
 function ShortUrl({ url, onEdit, onDelete }) {
-  const { theme } = useThemeContext();
+  const { theme } = useDashboardContext();
   return (
     <>
       <td

@@ -1,13 +1,13 @@
 import React, { use, useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../contexts/DashboardContext";
+import { useDashboardContext } from "../../contexts/DashboardContext";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
 
 function Signin() {
-  const context = useUserContext();
+  const context = useDashboardContext();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -67,7 +67,9 @@ function Signin() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Sign In to <span className="text-blue-600">SaifURL</span>
+        </h2>
         {errorMessage && (
           <div className="mb-4 text-red-500 text-sm">{errorMessage}</div>
         )}

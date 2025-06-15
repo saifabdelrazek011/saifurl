@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from "react";
 import ShortUrl from "../components/ShortUrl";
-import { useThemeContext } from "../contexts/DashboardContext";
+import { useDashboardContext } from "../contexts/DashboardContext";
 import {
   useShorturlsContext,
-  useEditShortUrlContext,
-  useNewShortUrlContext,
   ShorturlsProvider,
-} from "../contexts/ShortUrlsContext";
+} from "../contexts/ShorturlsContext";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
 
 function Shorturls() {
-  const { shortUrls, setShortUrls } = useShorturlsContext();
-  const { theme } = useThemeContext();
+  const {
+    shortUrls,
+    setShortUrls,
+    editId,
+    setEditId,
+    editData,
+    setEditData,
+    newUrl,
+    setNewUrl,
+    creating,
+    setCreating,
+  } = useShorturlsContext();
+  const { theme } = useDashboardContext();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { editId, setEditId, editData, setEditData } = useEditShortUrlContext();
-  const { newUrl, setNewUrl, creating, setCreating } = useNewShortUrlContext();
 
   useEffect(() => {
     fetchShortUrls();

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
+import { useDashboardContext } from "./contexts/DashboardContext";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Contact from "./pages/Contact";
@@ -27,7 +28,7 @@ function App() {
         const data = await response.json();
         setUserData(data);
       } catch (error) {
-        console.error("Error fetching user:", error);
+        setUserData(undefined);
       }
     };
     fetchUser();
@@ -39,7 +40,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route
           path="/dashboard"
-          element={userData ? <Dashboard /> : <Navigate to="/signin" />}
+          element={userData ? <Dashboard /> : <Navigate to="/" />}
         />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signin" element={<Signin />} />

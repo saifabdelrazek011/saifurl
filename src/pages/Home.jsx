@@ -40,6 +40,26 @@ const Home = () => {
         >
           Get Started
         </Link>
+        <Link
+          to="https://github.com/saifabdelrazek011/saifurl"
+          className="mt-6 text-gray-600 hover:text-blue-600 transition"
+        >
+          Star the project on GitHub
+        </Link>
+        <div className="mt-8 text-gray-600">
+          <p>
+            Made with ❤️ by{" "}
+            <a
+              href="https://github.com/saifabdelrazek011"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub profile"
+              className="text-blue-600 hover:underline"
+            >
+              Saif Abdelrazek
+            </a>
+          </p>
+        </div>
       </main>
 
       {/* Footer */}

@@ -1,4 +1,5 @@
 import { useContext, createContext, setContext } from "react";
+import React, { useState } from "react";
 
 export const ShorturlsContext = createContext(undefined);
 
@@ -7,26 +8,7 @@ export const useShorturlsContext = () => {
   if (context === undefined) {
     throw new Error("ShorturlsContext must be used within a ShorturlsProvider");
   }
-  const { shortUrls, setShortUrls } = context;
-  return { shortUrls, setShortUrls };
-};
-
-export const useEditShortUrlContext = () => {
-  const context = useContext(ShorturlsContext);
-  if (context === undefined) {
-    throw new Error("ShorturlsContext must be used within a ShorturlsProvider");
-  }
-  const { editId, setEditId, editData, setEditData } = context;
-  return { editId, setEditId, editData, setEditData };
-};
-
-export const useNewShortUrlContext = () => {
-  const context = useContext(ShorturlsContext);
-  if (context === undefined) {
-    throw new Error("ShorturlsContext must be used within a ShorturlsProvider");
-  }
-  const { newUrl, setNewUrl, creating, setCreating } = context;
-  return { newUrl, setNewUrl, creating, setCreating };
+  return context;
 };
 
 export const ShorturlsProvider = ({ children }) => {

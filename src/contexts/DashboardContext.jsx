@@ -1,42 +1,23 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const DashboardContext = createContext(undefined);
 
+// User context
 export const useDashboardContext = () => {
   const context = useContext(DashboardContext);
+
   if (context === undefined) {
     throw new Error(
       "useDashboardContext must be used within a DashboardProvider"
     );
   }
-  const { userData, setUserData } = context;
-  if (!userData) {
-    throw new Error("DashboardContext must have userData");
-  }
-  if (!userData.user.email) {
-    throw new Error("DashboardContext must have userData.user.email");
-  }
-  if (!userData.firstName) {
-    throw new Error("DashboardContext must have userData.firstName");
-  }
 
-  return { userData, setUserData };
+  return context;
 };
 
-export const useThemeContext = () => {
-  const context = useContext(DashboardContext);
-  if (context === undefined) {
-    throw new Error("useThemeContext must be used within a DashboardProvider");
-  }
-  const { theme, setTheme } = context;
-  if (theme === undefined || setTheme === undefined) {
-    throw new Error("DashboardContext must have theme and setTheme");
-  }
-  return { theme, setTheme };
-};
-
+// DashboardProvider component
 export const DashboardProvider = ({ children }) => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(undefined);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   return (
@@ -46,8 +27,6 @@ export const DashboardProvider = ({ children }) => {
         setUserData,
         theme,
         setTheme,
-        shorturls,
-        setShorturls,
       }}
     >
       {children}
