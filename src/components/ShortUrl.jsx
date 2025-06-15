@@ -1,14 +1,8 @@
 import React from "react";
 
-function ShortUrl({ url, theme }) {
+function ShortUrl({ url, theme, onEdit, onDelete }) {
   return (
-    <tr
-      className={
-        theme === "dark"
-          ? "hover:bg-gradient-to-r hover:from-blue-950 hover:to-red-950 transition"
-          : "hover:bg-gradient-to-r hover:from-blue-50 hover:to-red-50 transition"
-      }
-    >
+    <>
       <td
         className={
           "py-2 px-4 border-b break-all " +
@@ -64,7 +58,21 @@ function ShortUrl({ url, theme }) {
           {url.clicks}
         </span>
       </td>
-    </tr>
+      <td className="py-2 px-4 border-b text-center">
+        <button
+          onClick={() => onEdit(url)}
+          className="bg-yellow-500 text-white px-3 py-1 rounded mr-2"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => onDelete(url._id)}
+          className="bg-red-600 text-white px-3 py-1 rounded"
+        >
+          Delete
+        </button>
+      </td>
+    </>
   );
 }
 

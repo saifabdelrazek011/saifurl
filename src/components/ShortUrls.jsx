@@ -8,30 +8,106 @@ function Shorturls({ theme }) {
   const [shortUrls, setShortUrls] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editId, setEditId] = useState(null);
+  const [editData, setEditData] = useState({ fullUrl: "", shortUrl: "" });
+  const [newUrl, setNewUrl] = useState({ fullUrl: "", shortUrl: "" });
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
-    const fetchShortUrls = async () => {
-      try {
-        const response = await fetch(apiUrl + "/shorturls", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch short URLs");
-        }
-
-        const data = await response.json();
-        setShortUrls(data.shortUrls || []);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchShortUrls();
   }, []);
+
+  const fetchShortUrls = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(apiUrl + "/shorturls", {
+        method: "GET",
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Failed to fetch short URLs");
+      const data = await response.json();
+      setShortUrls(data.shortUrls || []);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEdit = (url) => {
+    setEditId(url._id);
+    setEditData({ fullUrl: url.full, shortUrl: url.short });
+  };
+
+  const handleEditChange = (e) => {
+    setEditData({ ...editData, [e.target.name]: e.target.value });
+  };
+
+  const handleEditSave = async (id) => {
+    try {
+      const response = await fetch(`${apiUrl}/shorturls/${id}`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editData),
+      });
+      console.log("Response:", editData);
+      if (!response.ok) throw new Error("Failed to update short URL");
+      setEditId(null);
+      fetchShortUrls();
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this short URL?"))
+      return;
+    try {
+      const response = await fetch(`${apiUrl}/shorturls/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Failed to delete short URL");
+      fetchShortUrls();
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleNewChange = (e) => {
+    setNewUrl({ ...newUrl, [e.target.name]: e.target.value });
+  };
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${apiUrl}/shorturls`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newUrl),
+      }).then((res) => res.json());
+      console.log("Response:", response);
+      console.log("New URL Data:", newUrl);
+      if (!response.success) {
+        setError(response.message || "Failed to create short URL");
+        return;
+      }
+      setNewUrl({ fullUrl: "", shortUrl: "" });
+      setCreating(false);
+      fetchShortUrls();
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(null);
+      }, 5000);
+    }
+  }, [error]);
 
   return (
     <div
@@ -54,70 +130,203 @@ function Shorturls({ theme }) {
         </p>
       )}
       {error && (
-        <p className={theme === "dark" ? "text-red-400" : "text-red-500"}>
+        <p
+          className={
+            `${theme === "dark" ? "text-red-400" : "text-red-500"}` + " mb-3"
+          }
+        >
           {error}
         </p>
       )}
-      {!loading && !error && (
-        <div className="overflow-x-auto">
-          <table
-            className={`min-w-full rounded-xl border shadow ${
-              theme === "dark"
-                ? "bg-gray-900 border-blue-900"
-                : "bg-white border-blue-200"
-            }`}
-          >
-            <thead>
-              <tr
-                className={
-                  theme === "dark"
-                    ? "bg-gradient-to-r from-blue-900 to-red-900"
-                    : "bg-gradient-to-r from-blue-600 to-red-500"
-                }
-              >
-                <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
-                  Original URL
-                </th>
-                <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
-                  Short URL
-                </th>
-                <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
-                  Clicks
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {shortUrls.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={3}
-                    className={`text-center py-6 ${
-                      theme === "dark" ? "text-red-400" : "text-red-500"
-                    }`}
-                  >
-                    No short URLs found.
-                  </td>
-                </tr>
-              ) : (
-                shortUrls.map((url) => (
-                  <ShortUrl key={url._id} url={url} theme={theme} />
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
-      <div className="mt-8 text-right">
-        <a
-          href="/create-shorturl"
-          className={`inline-block bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-lg shadow hover:from-red-600 hover:to-blue-600 transition font-semibold ${
-            theme === "dark" ? "border border-blue-900" : ""
+      <div className="overflow-x-auto">
+        <table
+          className={`min-w-full rounded-xl border shadow ${
+            theme === "dark"
+              ? "bg-gray-900 border-blue-900"
+              : "bg-white border-blue-200"
           }`}
         >
-          + Create New Short URL
-        </a>
+          <thead>
+            <tr
+              className={
+                theme === "dark"
+                  ? "bg-gradient-to-r from-blue-900 to-red-900"
+                  : "bg-gradient-to-r from-blue-600 to-red-500"
+              }
+            >
+              <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
+                Original URL
+              </th>
+              <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
+                Short URL
+              </th>
+              <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
+                Clicks
+              </th>
+              <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {shortUrls.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={4}
+                  className={`text-center py-6 ${
+                    theme === "dark" ? "text-red-400" : "text-red-500"
+                  }`}
+                >
+                  No short URLs found.
+                </td>
+              </tr>
+            ) : (
+              shortUrls.map((url) =>
+                editId === url._id ? (
+                  <tr key={url._id}>
+                    <td className="py-2 px-4 border-b">
+                      <input
+                        name="fullUrl"
+                        value={editData.fullUrl}
+                        onChange={handleEditChange}
+                        className="w-full px-2 py-1 rounded"
+                      />
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      <input
+                        name="shortUrl"
+                        value={editData.shortUrl}
+                        onChange={handleEditChange}
+                        className="w-full px-2 py-1 rounded"
+                      />
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      {url.clicks}
+                    </td>
+                    <td className="py-2 px-4 border-b text-center">
+                      <button
+                        onClick={() => handleEditSave(url._id)}
+                        className="bg-blue-600 text-white px-3 py-1 rounded mr-2"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setEditId(null)}
+                        className="bg-gray-400 text-white px-3 py-1 rounded"
+                      >
+                        Cancel
+                      </button>
+                    </td>
+                  </tr>
+                ) : (
+                  <tr key={url._id}>
+                    <ShortUrl
+                      url={url}
+                      theme={theme}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
+                  </tr>
+                )
+              )
+            )}
+            {/* New URL creation row */}
+            {creating && (
+              <tr>
+                <td className="py-2 px-4 border-b align-middle">
+                  <input
+                    name="fullUrl"
+                    value={newUrl.fullUrl}
+                    onChange={handleNewChange}
+                    className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
+                      theme === "dark"
+                        ? "bg-gray-800 text-white border-blue-900 focus:ring-blue-500"
+                        : "bg-white text-black border-blue-200 focus:ring-blue-400"
+                    } transition`}
+                    placeholder="Paste the full URL here"
+                    autoFocus
+                  />
+                </td>
+                <td className="py-2 px-4 border-b align-middle">
+                  <input
+                    name="shortUrl"
+                    value={newUrl.shortUrl}
+                    onChange={handleNewChange}
+                    className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
+                      theme === "dark"
+                        ? "bg-gray-800 text-white border-blue-900 focus:ring-red-500"
+                        : "bg-white text-black border-blue-200 focus:ring-red-400"
+                    } transition`}
+                    placeholder="Custom short code (optional)"
+                  />
+                </td>
+                <td className="py-2 px-4 border-b text-center align-middle">
+                  -
+                </td>
+                <td className="py-2 px-4 border-b text-center align-middle">
+                  <div className="flex gap-2 justify-center">
+                    <button
+                      onClick={handleCreate}
+                      className="inline-flex items-center gap-1 bg-gradient-to-r from-green-500 to-blue-500 hover:from-blue-500 hover:to-green-500 text-white px-4 py-2 rounded-lg shadow font-semibold transition min-w-[110px] justify-center"
+                      style={{ minWidth: "110px" }}
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                      Create
+                    </button>
+                    <button
+                      onClick={() => setCreating(false)}
+                      className="inline-flex items-center gap-1 bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-semibold transition min-w-[110px] justify-center"
+                      style={{ minWidth: "110px" }}
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                      Cancel
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-8 text-right">
+        {!creating && (
+          <button
+            onClick={() => setCreating(true)}
+            className={`inline-block bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-lg shadow hover:from-red-600 hover:to-blue-600 transition font-semibold ${
+              theme === "dark" ? "border border-blue-900" : ""
+            }`}
+          >
+            + Create New Short URL
+          </button>
+        )}
       </div>
     </div>
   );
 }
+
 export default Shorturls;

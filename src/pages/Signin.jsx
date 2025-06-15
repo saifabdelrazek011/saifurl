@@ -1,18 +1,28 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/dashboard.context";
 
 const apiUrl =
-  import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1/auth";
+  import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
 
 function Signin() {
+  const context = useUserContext();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const user = useUserContext();
-  if (user) {
-    window.location.href = "/dashboard";
-    return null;
-  }
+  const [userData, setUserData] = useState(context?.userData);
+
+  useEffect(() => {
+    setUserData(context?.userData);
+  }, [context]);
+
+  useEffect(() => {
+    if (userData) {
+      navigate("/dashboard");
+    }
+  }, [userData, navigate]);
+
   const errorRegion = document.getElementById("error-region");
   if (errorRegion) {
     errorRegion.innerHTML = "";
@@ -25,7 +35,7 @@ function Signin() {
     const password = form.elements.namedItem("password").value;
 
     try {
-      const response = await fetch(apiUrl + "/signin", {
+      const response = await fetch(apiUrl + "/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +58,7 @@ function Signin() {
       setShowPassword(false);
 
       setErrorMessage(null);
-      window.location.href = "/dashboard";
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error during signin:", error);
       setErrorMessage("An error occurred. Please try again later.");

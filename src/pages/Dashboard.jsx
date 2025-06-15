@@ -1,22 +1,32 @@
 import { useState, useEffect } from "react";
 import { useUserContext } from "../contexts/dashboard.context.jsx";
 import Shorturls from "../components/ShortUrls.jsx";
+import { useNavigate } from "react-router-dom";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
 
 function Dashboard() {
+  const context = useUserContext();
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(context?.userData);
   const [user, setUser] = useState(null);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const context = useUserContext();
 
   if (!context) {
     throw new Error("Dashboard must be used within a UserContextProvider");
   }
 
   useEffect(() => {
+    setUserData(context?.userData);
     setUser(context?.userData?.user);
   }, [context]);
+
+  useEffect(() => {
+    if (userData === null) {
+      navigate("/signin");
+    }
+  }, [userData, navigate]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");

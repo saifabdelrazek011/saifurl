@@ -12,9 +12,8 @@ function Signup() {
   if (errorRegion) {
     errorRegion.innerHTML = ""; // Clear any previous error messages
   }
-
-  const user = useUserContext();
-  if (user) {
+  const userData = useUserContext()?.userData;
+  if (userData) {
     window.location.href = "/dashboard";
     return null; // Prevent rendering if user is already logged in
   }
