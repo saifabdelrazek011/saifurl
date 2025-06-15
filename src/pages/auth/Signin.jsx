@@ -1,7 +1,7 @@
 import React, { use, useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../contexts/dashboard.context";
+import { useUserContext } from "../../contexts/DashboardContext";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
@@ -21,7 +21,7 @@ function Signin() {
     if (userData) {
       navigate("/dashboard");
     }
-  }, [userData, navigate]);
+  }, [userData]);
 
   const errorRegion = document.getElementById("error-region");
   if (errorRegion) {

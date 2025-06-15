@@ -2,9 +2,12 @@ import { StrictMode } from "react";
 import "./index.css";
 import App from "./router.jsx";
 import ReactDOM from "react-dom/client";
+import { DashboardContext } from "./contexts/DashboardContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <DashboardProvider>
+      <App />
+    </DashboardProvider>
   </StrictMode>
 );

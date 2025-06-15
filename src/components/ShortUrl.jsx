@@ -1,6 +1,7 @@
 import React from "react";
 
-function ShortUrl({ url, theme, onEdit, onDelete }) {
+function ShortUrl({ url, onEdit, onDelete }) {
+  const { theme } = useThemeContext();
   return (
     <>
       <td

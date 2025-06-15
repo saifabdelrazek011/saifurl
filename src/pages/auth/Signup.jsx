@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUserContext } from "../contexts/dashboard.context";
+import { useUserContext } from "../../contexts/DashboardContext";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1/auth";

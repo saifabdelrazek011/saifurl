@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useUserContext } from "../contexts/dashboard.context.jsx";
-import Shorturls from "../components/ShortUrls.jsx";
+import { useUserContext } from "../contexts/DashboardContext.jsx";
+import Shorturls from "./ShortUrls.jsx";
 import { useNavigate } from "react-router-dom";
 
 const apiUrl =
