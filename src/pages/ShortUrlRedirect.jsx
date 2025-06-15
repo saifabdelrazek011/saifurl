@@ -15,18 +15,24 @@ const ShortUrlRedirect = () => {
           method: "GET",
         });
 
-        if (!response.ok) {
-          if (response.status === 404) {
-            setError("Short URL not found.");
-          } else if (response.status === 403) {
-            setError("Access to this short URL is forbidden.");
-          } else if (response.status === 500) {
-            setError("Internal server error.");
-          } else {
-            setError("Failed to fetch short URL.");
+        setEffect(() => {
+          if (!response) {
+            setError("No response from the server.");
+            return;
           }
-          return;
-        }
+          if (!response.ok) {
+            if (response.status === 404) {
+              setError("Short URL not found.");
+            } else if (response.status === 403) {
+              setError("Access to this short URL is forbidden.");
+            } else if (response.status === 500) {
+              setError("Internal server error.");
+            } else {
+              setError("Failed to fetch short URL.");
+            }
+            return;
+          }
+        });
 
         const data = await response.json();
 

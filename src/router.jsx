@@ -8,6 +8,7 @@ import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/Signup";
 import ShortUrlRedirect from "./pages/ShortUrlRedirect";
 import ForgetPassword from "./pages/auth/ForgetPassword";
+import NotFound from "./pages/404";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
@@ -44,7 +45,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path=":slug" element={<ShortUrlRedirect />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
     </HashRouter>
   );

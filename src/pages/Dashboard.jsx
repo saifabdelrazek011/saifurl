@@ -101,6 +101,86 @@ function Dashboard() {
           <Shorturls />
         </ShorturlsProvider>
       </div>
+      {/* Improved Short URL domains section with theme */}
+      <section
+        className={`max-w-5xl mx-auto px-4 py-8 mt-8 rounded-xl shadow-lg flex flex-col items-center ${
+          theme === "dark"
+            ? "bg-gradient-to-r from-blue-900 via-gray-900 to-red-900"
+            : "bg-gradient-to-r from-blue-600 to-red-500"
+        }`}
+      >
+        <h2 className="text-2xl font-bold text-white mb-4 drop-shadow">
+          Available Short Domains
+        </h2>
+        <div className="flex flex-wrap gap-4 justify-center">
+          {[
+            { domain: "sa.died.pw", url: "https://sa.died.pw" },
+            { domain: "s.hec.to", url: "https://s.hec.to" },
+            { domain: "sa.ix.tc", url: "https://sa.ix.tc" },
+          ].map(({ domain, url }) => (
+            <a
+              key={domain}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`transition text-lg font-semibold px-6 py-3 rounded-lg shadow border-2 ${
+                theme === "dark"
+                  ? "bg-gray-900 hover:bg-blue-900 text-blue-200 border-blue-800 hover:border-red-700"
+                  : "bg-white/90 hover:bg-white text-blue-700 border-blue-200 hover:border-red-400"
+              }`}
+            >
+              {domain}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Improved Footer with theme */}
+      <footer
+        className={`text-center text-sm mt-16 py-6 rounded-t-xl shadow-inner ${
+          theme === "dark"
+            ? "bg-gradient-to-r from-blue-950/90 to-red-950/90 text-gray-400"
+            : "bg-gradient-to-r from-blue-900/80 to-red-900/80 text-gray-300"
+        }`}
+      >
+        <div className="flex flex-col md:flex-row gap-2 justify-center items-center">
+          <span>
+            Made with <span className="text-red-400">❤️</span> by{" "}
+            <a
+              href="https://saifabdelrazek.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`hover:underline font-semibold ${
+                theme === "dark"
+                  ? "text-blue-300 hover:text-red-300"
+                  : "text-blue-300 hover:text-red-400"
+              }`}
+            >
+              Saif Abdelrazek
+            </a>
+          </span>
+          <span className="hidden md:inline-block mx-2">|</span>
+          <a
+            href="https://github.com/saifabdelrazek"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`hover:underline font-semibold flex items-center gap-1 ${
+              theme === "dark"
+                ? "text-blue-300 hover:text-red-300"
+                : "text-blue-300 hover:text-red-400"
+            }`}
+          >
+            <svg
+              className="w-4 h-4 inline-block"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 2.92-.39c.99.01 1.99.13 2.92.39 2.22-1.49 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.08.79 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z" />
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

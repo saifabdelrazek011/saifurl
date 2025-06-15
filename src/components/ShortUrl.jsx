@@ -1,5 +1,6 @@
 import React from "react";
 import { useDashboardContext } from "../contexts/DashboardContext";
+import { Link } from "react-router-dom";
 
 function ShortUrl({ url, onEdit, onDelete }) {
   const { theme } = useDashboardContext();
@@ -30,10 +31,8 @@ function ShortUrl({ url, onEdit, onDelete }) {
           (theme === "dark" ? "border-blue-900" : "border-blue-100")
         }
       >
-        <a
-          href={url.short}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          to={"/" + url.short}
           className={
             theme === "dark"
               ? "text-red-400 underline hover:text-blue-200 font-semibold"
@@ -41,7 +40,7 @@ function ShortUrl({ url, onEdit, onDelete }) {
           }
         >
           {url.short}
-        </a>
+        </Link>
       </td>
       <td
         className={

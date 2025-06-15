@@ -33,7 +33,7 @@ function Shorturls() {
   const fetchShortUrls = async () => {
     setLoading(true);
     try {
-      const response = await fetch(apiUrl + "/shorturls", {
+      const response = await fetch(apiUrl + "/shorturls/mine", {
         method: "GET",
         credentials: "include",
       });
