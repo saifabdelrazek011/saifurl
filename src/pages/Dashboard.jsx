@@ -27,7 +27,7 @@ function Dashboard() {
     if (userData === null) {
       navigate("/signin");
     }
-  }, [userData, navigate]);
+  }, [userData]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -40,7 +40,7 @@ function Dashboard() {
       method: "POST",
       credentials: "include",
     });
-    window.location.href = "/signin";
+    navigate("/signin");
   };
 
   const toggleTheme = () => {

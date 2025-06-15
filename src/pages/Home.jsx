@@ -40,12 +40,12 @@ const Home = () => {
         >
           Get Started
         </Link>
-        <Link
-          to="https://github.com/saifabdelrazek011/saifurl"
+        <a
+          href="https://github.com/saifabdelrazek011/saifurl"
           className="mt-6 text-gray-600 hover:text-blue-600 transition"
         >
           Star the project on GitHub
-        </Link>
+        </a>
         <div className="mt-8 text-gray-600">
           <p>
             Made with ❤️ by{" "}

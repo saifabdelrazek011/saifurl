@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDashboardContext } from "../../contexts/DashboardContext";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1/auth";
 
 function Signup() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -13,10 +16,12 @@ function Signup() {
     errorRegion.innerHTML = ""; // Clear any previous error messages
   }
   const userData = useDashboardContext()?.userData;
-  if (userData) {
-    window.location.href = "/dashboard";
-    return null; // Prevent rendering if user is already logged in
-  }
+
+  useEffect(() => {
+    if (userData) {
+      navigate("/dashboard");
+    }
+  }, [userData, navigate]);
 
   const handleSignup = async (event) => {
     event.preventDefault();
@@ -63,7 +68,7 @@ function Signup() {
       }
       setErrorMessage(null);
 
-      window.location.href = "/signin";
+      navigate("/signin");
     } catch (error) {
       console.error("Error during signup:", error);
       setErrorMessage("An error occurred during signup. Please try again.");
@@ -158,9 +163,9 @@ function Signup() {
         </form>
         <p className="mt-4 text-sm text-center">
           Already have an account?{" "}
-          <a href={"/signin"} className="text-blue-600 hover:underline">
+          <Link to={"/signin"} className="text-blue-600 hover:underline">
             Sign In
-          </a>
+          </Link>
         </p>
       </div>
     </div>

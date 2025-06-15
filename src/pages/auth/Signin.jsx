@@ -2,6 +2,7 @@ import React, { use, useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDashboardContext } from "../../contexts/DashboardContext";
+import { Link } from "react-router-dom";
 
 const apiUrl =
   import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
@@ -120,9 +121,9 @@ function Signin() {
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
           Don't have an account?{" "}
-          <a href={"/signup"} className="text-blue-600 hover:underline">
+          <Link to={"/signup"} className="text-blue-600 hover:underline">
             Sign Up
-          </a>
+          </Link>
         </p>
       </div>
     </div>
