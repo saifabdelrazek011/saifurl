@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const apiUrl =
-  import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
-
 const ForgetPassword = () => {
+  const navigate = useNavigate();
+  const { apiUrl } = useDashboardContext();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
@@ -51,7 +50,7 @@ const ForgetPassword = () => {
       setMessage("Password reset successful. You can now log in.");
       setStep(3);
       setTimeout(() => {
-        useNavigate("/signin"); // Redirect to sign-in page
+        navigate("/signin"); // Redirect to sign-in page
       }, 2000); // Redirect after 2 seconds
     } catch (err) {
       setMessage(err.message || "Failed to reset password.");

@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDashboardContext } from "../contexts/DashboardContext";
 
 const Home = () => {
+  const { userData } = useDashboardContext();
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-red-100 flex flex-col">
       {/* Header */}
@@ -27,6 +29,11 @@ const Home = () => {
 
       {/* Main Content */}
       <main className="flex flex-1 flex-col items-center justify-center text-center px-4">
+        <img
+          src="https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+          alt="Service Status"
+          className="h-6 mb-4"
+        />
         <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-blue-800">
           Shorten your links with <span className="text-red-600">SaifURL</span>
         </h2>
@@ -35,11 +42,12 @@ const Home = () => {
           easy to share and manage.
         </p>
         <Link
-          to="/signup"
+          to={userData ? "/dashboard" : "/signup"}
           className="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-red-500 text-white font-bold text-lg shadow-lg hover:scale-105 transition"
         >
           Get Started
         </Link>
+
         <a
           href="https://github.com/saifabdelrazek011/saifurl"
           className="mt-6 text-gray-600 hover:text-blue-600 transition"

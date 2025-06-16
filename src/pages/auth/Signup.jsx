@@ -3,19 +3,12 @@ import { useDashboardContext } from "../../contexts/DashboardContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const apiUrl =
-  import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1/auth";
-
 function Signup() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const errorRegion = document.getElementById("error-region");
-  if (errorRegion) {
-    errorRegion.innerHTML = ""; // Clear any previous error messages
-  }
-  const userData = useDashboardContext()?.userData;
+  const { userData, apiUrl } = useDashboardContext();
 
   useEffect(() => {
     if (userData) {
@@ -24,6 +17,7 @@ function Signup() {
   }, [userData, navigate]);
 
   const handleSignup = async (event) => {
+    setLoading(true);
     event.preventDefault();
     const form = event.currentTarget;
     const data = {
@@ -42,18 +36,23 @@ function Signup() {
         credentials: "include",
         body: JSON.stringify(data),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         setErrorMessage(
           errorData.message || "Signup failed. Please try again."
         );
-        if (errorRegion) {
-          errorRegion.innerHTML = `<p class="text-red-500">${errorMessage}</p>`;
-        }
         return;
       }
-      const result = await response.json();
+      const responseData = await response.json();
+
+      if (!responseData) {
+        throw new Error("No response received from the server.");
+      }
+
+      if (responseData.error) {
+        setErrorMessage(responseData.error);
+        return;
+      }
 
       setErrorMessage("Signup successful! Redirecting...");
       form.reset(); // Reset the form fields after successful signup
@@ -72,11 +71,16 @@ function Signup() {
     } catch (error) {
       console.error("Error during signup:", error);
       setErrorMessage("An error occurred during signup. Please try again.");
-      if (errorRegion) {
-        errorRegion.innerHTML = `<p class="text-red-500">${errorMessage}</p>`;
-      }
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMessage(null);
+    }, 5000);
+  }, [errorMessage]);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -84,12 +88,21 @@ function Signup() {
         <h2 className="text-2xl font-bold mb-6 text-center">
           Sign Up to <span className="text-blue-600">SaifURL</span>
         </h2>
+        <img
+          src="https://uptime.saifabdelrazek.com/api/badge/7/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+          alt="Service Status"
+          className="  h-6 mb-4 mx-auto animate-pulse transition-all duration-500 ease-in-out transform hover:scale-105"
+        />
         {errorMessage && (
           <div id="error-region" className="mb-4">
             <p className="text-red-500">{errorMessage}</p>
           </div>
         )}
-        <form className="space-y-4" id="signup-form" onSubmit={handleSignup}>
+        <form
+          className="space-y-4"
+          id="signup-form"
+          onSubmit={!loading ? handleSignup : null}
+        >
           <div className="mb-4">
             <label
               className=" inline text-sm font-medium mb-2"
@@ -158,7 +171,11 @@ function Signup() {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
           >
-            Sign Up
+            {loading ? (
+              <span className="animate-spin">🔄 Signing Up...</span>
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
         <p className="mt-4 text-sm text-center">

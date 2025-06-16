@@ -2,49 +2,37 @@ import { useState, useEffect } from "react";
 import { useDashboardContext } from "../contexts/DashboardContext.jsx";
 import Shorturls from "./ShortUrls.jsx";
 import { useNavigate } from "react-router-dom";
-import { ShorturlsProvider } from "../contexts/ShorturlsContext.jsx";
-
-const apiUrl =
-  import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
+import {
+  ShorturlsProvider,
+  useShorturlsContext,
+} from "../contexts/ShorturlsContext.jsx";
 
 function Dashboard() {
-  const context = useDashboardContext();
   const navigate = useNavigate();
-  const [userData, setUserData] = useState(context?.userData);
-  const [user, setUser] = useState(null);
-  const { theme, setTheme } = useDashboardContext() || "light";
-
-  if (!context) {
-    throw new Error("Dashboard must be used within a DashboardContextProvider");
-  }
+  const { userData, apiUrl, refreshUserData, theme, toggleTheme } =
+    useDashboardContext();
+  const { shortDomain, setShortDomain } = useShorturlsContext();
+  const [user, setUser] = useState(userData?.user || null);
+  const [loadingSignOut, setLoadingSignOut] = useState(false);
 
   useEffect(() => {
-    setUserData(context?.userData);
-    setUser(context?.userData?.user);
-  }, [context]);
-
-  useEffect(() => {
-    if (userData === null) {
+    if (!userData && !user) {
       navigate("/signin");
+      return;
+    } else {
+      setUser(userData.user);
     }
-  }, [userData]);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  }, [userData, navigate]);
 
   const handleSignout = async () => {
-    // Adjust the endpoint if needed
+    setLoadingSignOut(true);
     await fetch(apiUrl + "/auth/signout", {
       method: "POST",
       credentials: "include",
     });
-    navigate("/signin");
-  };
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setUser(null);
+    await refreshUserData();
+    setLoadingSignOut(false);
   };
 
   return (
@@ -76,7 +64,17 @@ function Dashboard() {
               </span>
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 items-center">
+            {/* Status Badge */}
+            <img
+              src={
+                theme === "dark"
+                  ? "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%2360a5fa&downColor=%23f87171&pendingColor=%23fbbf24&maintenanceColor=%234ade80&style=for-the-badge"
+                  : "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+              }
+              alt="Service Status"
+              className="h-6 mr-2"
+            />
             <button
               onClick={toggleTheme}
               className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
@@ -89,17 +87,18 @@ function Dashboard() {
               {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
             </button>
             <button
-              onClick={handleSignout}
+              onClick={!loadingSignOut ? handleSignout : null}
               className="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 shadow transition"
             >
-              Sign Out
+              {loadingSignOut ? (
+                <span className="animate-spin">🔄 Signing Out...</span>
+              ) : (
+                "Sign Out"
+              )}
             </button>
           </div>
         </div>
-
-        <ShorturlsProvider>
-          <Shorturls />
-        </ShorturlsProvider>
+        <Shorturls />
       </div>
       {/* Improved Short URL domains section with theme */}
       <section
@@ -115,22 +114,23 @@ function Dashboard() {
         <div className="flex flex-wrap gap-4 justify-center">
           {[
             { domain: "sa.died.pw", url: "https://sa.died.pw" },
-            { domain: "s.hec.to", url: "https://s.hec.to" },
             { domain: "sa.ix.tc", url: "https://sa.ix.tc" },
-          ].map(({ domain, url }) => (
-            <a
-              key={domain}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
+          ].map(({ domain }) => (
+            <button
               className={`transition text-lg font-semibold px-6 py-3 rounded-lg shadow border-2 ${
                 theme === "dark"
                   ? "bg-gray-900 hover:bg-blue-900 text-blue-200 border-blue-800 hover:border-red-700"
                   : "bg-white/90 hover:bg-white text-blue-700 border-blue-200 hover:border-red-400"
+              } ${
+                shortDomain === domain
+                  ? "border-red-500 bg-red-100 text-red-700"
+                  : "border-blue-300 hover:border-red-500"
               }`}
+              key={domain}
+              onClick={() => setShortDomain(domain)}
             >
               {domain}
-            </a>
+            </button>
           ))}
         </div>
       </section>
