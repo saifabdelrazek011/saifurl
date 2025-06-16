@@ -32,7 +32,7 @@ function ShortUrl({ url, onEdit, onDelete }) {
         }
       >
         <Link
-          to={"/" + url.short}
+          to={"https://sa.died.pw/" + url.short}
           className={
             theme === "dark"
               ? "text-red-400 underline hover:text-blue-200 font-semibold"
