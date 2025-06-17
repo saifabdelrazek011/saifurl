@@ -214,6 +214,23 @@ const Profile = () => {
               </span>
             </p>
           </div>
+          <a
+            href="https://status.saifabdelrazek.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:flex items-center ml-4"
+            title="View detailed service status"
+          >
+            <img
+              src={
+                theme === "dark"
+                  ? "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%2360a5fa&downColor=%23f87171&pendingColor=%23fbbf24&maintenanceColor=%234ade80&style=for-the-badge"
+                  : "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+              }
+              alt="Service Status"
+              className="h-6 mr-2 drop-shadow-lg rounded-full border border-white"
+            />
+          </a>
           <button
             onClick={toggleTheme}
             className={`mt-4 md:mt-0 px-4 py-2 rounded-lg font-semibold shadow transition ${

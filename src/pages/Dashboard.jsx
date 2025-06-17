@@ -69,15 +69,22 @@ function Dashboard() {
           </div>
           <div className="flex gap-3 items-center">
             {/* Status Badge */}
-            <img
-              src={
-                theme === "dark"
-                  ? "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%2360a5fa&downColor=%23f87171&pendingColor=%23fbbf24&maintenanceColor=%234ade80&style=for-the-badge"
-                  : "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
-              }
-              alt="Service Status"
-              className="h-6 mr-2"
-            />
+            <a
+              href="https://status.saifabdelrazek.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:block"
+            >
+              <img
+                src={
+                  theme === "dark"
+                    ? "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%2360a5fa&downColor=%23f87171&pendingColor=%23fbbf24&maintenanceColor=%234ade80&style=for-the-badge"
+                    : "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+                }
+                alt="Service Status"
+                className="h-6 mr-2"
+              />
+            </a>
             <Link
               to="/profile"
               className={`px-4 py-2 rounded-lg font-semibold shadow transition ${

@@ -29,11 +29,17 @@ const Home = () => {
 
       {/* Main Content */}
       <main className="flex flex-1 flex-col items-center justify-center text-center px-4">
-        <img
-          src="https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
-          alt="Service Status"
-          className="h-6 mb-4"
-        />
+        <a
+          href="https://status.saifabdelrazek.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+            alt="Service Status"
+            className="h-6 mb-4"
+          />
+        </a>
         <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-blue-800">
           Shorten your links with <span className="text-red-600">SaifURL</span>
         </h2>

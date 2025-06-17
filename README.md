@@ -1,12 +1,96 @@
-# React + Vite
+# SaifURL
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, fullstack URL shortener service with user authentication, dashboard, custom domains, and more.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- 🔗 **Shorten URLs** with custom aliases and multiple domains
+- 👤 **User authentication** (sign up, sign in, password reset)
+- 🏠 **Dashboard** to manage your short URLs
+- 📊 **Click tracking** for each short URL
+- 🎨 **Light/Dark theme** support
+- 🛡️ **Email verification** for secure accounts
+- 🛠️ **Profile management** (update info, change password)
+- 🌐 **HashRouter** for static hosting compatibility
+- 🏷️ **Status badge** for service health
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Getting Started
+
+### 1. **Clone the repository**
+
+```sh
+git clone https://github.com/saifabdelrazek011/saifurl.git
+cd saifurl
+```
+
+### 2. **Install dependencies**
+
+```sh
+npm install
+```
+
+### 3. **Set environment variables**
+
+Create a `.env` file if you want to override the default API URL:
+
+```
+VITE_API_URL=https://api.saifabdelrazek.com/v1
+```
+
+### 4. **Run the app**
+
+```sh
+npm run dev
+```
+
+The app will be available at [http://localhost:5173](http://localhost:5173) (or your Vite dev port).
+
+---
+
+## Project Structure
+
+```
+src/
+  components/         # Reusable UI components
+  contexts/           # React context providers (Dashboard, Shorturls)
+  pages/              # Main pages (Dashboard, Profile, Auth, etc.)
+  router.jsx          # Main router with HashRouter and routes
+  main.jsx            # App entry point
+```
+
+---
+
+## Usage
+
+- **Sign up** and verify your email.
+- **Sign in** to access your dashboard.
+- **Create, edit, and delete** short URLs.
+- **Copy** short URLs with one click.
+- **Switch themes** using the toggle in the header or profile.
+- **Manage your profile** and change your password.
+- **Reset your password** via the "Forget Password" page.
+- **Check service status** via the badge in the header/footer.
+
+---
+
+## Deployment
+
+- The app uses **HashRouter** for static hosting (e.g., Netlify, Vercel, GitHub Pages).
+- Make sure your backend API is accessible at the URL set in `VITE_API_URL`.
+
+---
+
+## Credits
+
+- Built by [Saif Abdelrazek](https://saifabdelrazek.com)
+- Status badge powered by [Uptime Kuma](https://status.saifabdelrazek.com)
+
+---
+
+## License
+
+MIT License

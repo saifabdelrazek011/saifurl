@@ -68,11 +68,17 @@ function Signin() {
         <h2 className="text-2xl font-bold mb-6 text-center">
           Sign In to <span className="text-blue-600">SaifURL</span>
         </h2>
-        <img
-          src="https://uptime.saifabdelrazek.com/api/badge/7/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
-          alt="Service Status"
-          className="h-6 mb-4 mx-auto animate-pulse transition-all duration-500 ease-in-out transform hover:scale-105"
-        />
+        <a
+          href="https://status.saifabdelrazek.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://uptime.saifabdelrazek.com/api/badge/7/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+            alt="Service Status"
+            className="h-6 mb-4 mx-auto animate-pulse transition-all duration-500 ease-in-out transform hover:scale-105"
+          />
+        </a>
         {errorMessage && (
           <div className="mb-4 text-red-500 text-sm">{errorMessage}</div>
         )}
