@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ShortUrl from "../components/ShortUrl";
 import { useDashboardContext } from "../contexts/DashboardContext";
 import { useShorturlsContext } from "../contexts/ShorturlsContext";
+import { Link } from "react-router-dom";
 
 function Shorturls() {
   const {
@@ -16,7 +17,7 @@ function Shorturls() {
     creating,
     setCreating,
   } = useShorturlsContext();
-  const { theme, apiUrl } = useDashboardContext();
+  const { userData, theme, apiUrl } = useDashboardContext();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -128,11 +129,11 @@ function Shorturls() {
       >
         Your Short URLs
       </h2>
-      {error && (
+      {userData.user.verified && error && (
         <p
-          className={
-            `${theme === "dark" ? "text-red-400" : "text-red-500"}` + " mb-3"
-          }
+          className={`${
+            theme === "dark" ? "text-red-400" : "text-red-500"
+          } mb-3`}
         >
           {error}
         </p>
@@ -168,7 +169,50 @@ function Shorturls() {
             </tr>
           </thead>
           <tbody>
-            {shortUrls.length === 0 ? (
+            {!userData.user.verified ? (
+              <tr>
+                <td colSpan={4}>
+                  <div
+                    className={`flex flex-col items-center justify-center my-4 py-8 rounded-xl shadow ${
+                      theme === "dark"
+                        ? "bg-gradient-to-r from-blue-900 via-gray-900 to-red-900 text-yellow-200"
+                        : "bg-gradient-to-r from-blue-100 via-white to-red-100 text-yellow-700"
+                    }`}
+                  >
+                    <svg
+                      className="w-10 h-10 mb-2 text-yellow-400"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 8v4m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"
+                      />
+                    </svg>
+                    <span className="font-semibold text-lg mb-1">
+                      Email Verification Required
+                    </span>
+                    <span className="text-sm text-center max-w-md">
+                      Please verify your email from your profile page to access
+                      your short URLs.
+                    </span>
+                    <Link
+                      to="/profile"
+                      className={`mt-4 px-5 py-2 rounded-lg font-semibold shadow transition ${
+                        theme === "dark"
+                          ? "bg-blue-700 text-white hover:bg-blue-600"
+                          : "bg-blue-600 text-white hover:bg-blue-700"
+                      }`}
+                    >
+                      Go to Profile
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ) : loading ? (
               <tr>
                 <td
                   colSpan={4}
@@ -176,11 +220,18 @@ function Shorturls() {
                     theme === "dark" ? "text-red-400" : "text-red-500"
                   }`}
                 >
-                  {loading ? (
-                    <span className="animate-spin">Loading Shorturls...</span>
-                  ) : (
-                    <strong>No short URLs found.</strong>
-                  )}
+                  <span className="animate-spin">Loading Shorturls...</span>
+                </td>
+              </tr>
+            ) : shortUrls.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={4}
+                  className={`text-center py-6 ${
+                    theme === "dark" ? "text-red-400" : "text-red-500"
+                  }`}
+                >
+                  <strong>No short URLs found.</strong>
                 </td>
               </tr>
             ) : (
@@ -317,7 +368,7 @@ function Shorturls() {
       </div>
 
       <div className="mt-8 text-right">
-        {!creating && (
+        {userData.user.verified && !creating && (
           <button
             onClick={() => setCreating(true)}
             className={`inline-block bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-lg shadow hover:from-red-600 hover:to-blue-600 transition font-semibold ${

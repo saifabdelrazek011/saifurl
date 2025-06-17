@@ -9,19 +9,14 @@ function Signin() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { userData, apiUrl, refreshUserData } = useDashboardContext();
+  const { userData, apiUrl, refreshUserData, isUserLoading } =
+    useDashboardContext();
 
   useEffect(() => {
-    if (userData) {
+    if (userData && !isUserLoading) {
       navigate("/dashboard");
     }
-  }, [userData]);
-
-  useEffect(() => {
-    if (userData) {
-      navigate("/dashboard");
-    }
-  }, [userData, navigate]);
+  }, [userData, isUserLoading, navigate]);
 
   const errorRegion = document.getElementById("error-region");
   if (errorRegion) {

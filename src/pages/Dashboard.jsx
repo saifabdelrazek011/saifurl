@@ -1,28 +1,31 @@
 import { useState, useEffect } from "react";
 import { useDashboardContext } from "../contexts/DashboardContext.jsx";
 import Shorturls from "./ShortUrls.jsx";
-import { useNavigate } from "react-router-dom";
-import {
-  ShorturlsProvider,
-  useShorturlsContext,
-} from "../contexts/ShorturlsContext.jsx";
+import { useNavigate, Link } from "react-router-dom";
+import { useShorturlsContext } from "../contexts/ShorturlsContext.jsx";
 
 function Dashboard() {
   const navigate = useNavigate();
-  const { userData, apiUrl, refreshUserData, theme, toggleTheme } =
-    useDashboardContext();
+  const {
+    userData,
+    apiUrl,
+    refreshUserData,
+    theme,
+    toggleTheme,
+    isUserLoading,
+  } = useDashboardContext();
   const { shortDomain, setShortDomain } = useShorturlsContext();
   const [user, setUser] = useState(userData?.user || null);
   const [loadingSignOut, setLoadingSignOut] = useState(false);
 
   useEffect(() => {
-    if (!userData && !user) {
+    if (!userData && !isUserLoading) {
       navigate("/signin");
       return;
     } else {
       setUser(userData.user);
     }
-  }, [userData, navigate]);
+  }, [userData, navigate, isUserLoading, user]);
 
   const handleSignout = async () => {
     setLoadingSignOut(true);
@@ -75,6 +78,17 @@ function Dashboard() {
               alt="Service Status"
               className="h-6 mr-2"
             />
+            <Link
+              to="/profile"
+              className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
+                theme === "dark"
+                  ? "bg-blue-900 text-white hover:bg-blue-700"
+                  : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+              }`}
+              aria-label="Profile"
+            >
+              Profile
+            </Link>
             <button
               onClick={toggleTheme}
               className={`px-4 py-2 rounded-lg font-semibold shadow transition ${

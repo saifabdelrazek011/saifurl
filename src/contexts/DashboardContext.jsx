@@ -18,11 +18,13 @@ export const useDashboardContext = () => {
 // DashboardProvider component
 export const DashboardProvider = ({ children }) => {
   const [userData, setUserData] = useState(undefined);
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const apiUrl =
     import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
 
   const refreshUserData = async () => {
+    setIsUserLoading(true);
     try {
       const response = await fetch(apiUrl + "/auth/users/me", {
         method: "GET",
@@ -35,6 +37,36 @@ export const DashboardProvider = ({ children }) => {
       setUserData(data);
     } catch (error) {
       setUserData(undefined);
+    } finally {
+      setIsUserLoading(false);
+    }
+  };
+
+  const handleUpdateUser = async (formData) => {
+    setIsUserLoading(true);
+    try {
+      const response = await fetch(`${apiUrl}/auth/users/me`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error("Failed to update user data");
+      }
+
+      const data = await response.json();
+      await refreshUserData();
+    } catch (error) {
+      throw new Error(
+        error.message || "Error updating user data. Please try again later."
+      );
+    } finally {
+      setIsUserLoading(false);
     }
   };
 
@@ -58,9 +90,10 @@ export const DashboardProvider = ({ children }) => {
     <DashboardContext.Provider
       value={{
         userData,
+        refreshUserData,
+        handleUpdateUser,
         theme,
         toggleTheme,
-        refreshUserData,
         apiUrl,
       }}
     >

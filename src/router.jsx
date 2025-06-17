@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDashboardContext } from "./contexts/DashboardContext";
 import { ShorturlsProvider } from "./contexts/ShorturlsContext";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Contact from "./pages/Contact";
 import Signin from "./pages/auth/Signin";
@@ -12,7 +13,7 @@ import ForgetPassword from "./pages/auth/ForgetPassword";
 import NotFound from "./pages/404";
 
 function App() {
-  const { userData } = useDashboardContext();
+  const { userData, isUserLoading } = useDashboardContext();
 
   return (
     <ShorturlsProvider>
@@ -22,26 +23,48 @@ function App() {
           <Route
             path="/dashboard"
             element={
-              userData ? <Dashboard /> : <Navigate to="/signin" replace />
+              userData && !isUserLoading ? (
+                <Dashboard />
+              ) : (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              userData && !isUserLoading ? (
+                <Profile />
+              ) : (
+                <Navigate to="/signin" replace />
+              )
             }
           />
           <Route path="/contact" element={<Contact />} />
           <Route
             path="/signin"
             element={
-              !userData ? <Signin /> : <Navigate to="/dashboard" replace />
+              !userData && !isUserLoading ? (
+                <Signin />
+              ) : (
+                <Navigate to="/dashboard" replace />
+              )
             }
           />
           <Route
             path="/signup"
             element={
-              !userData ? <Signup /> : <Navigate to="/dashboard" replace />
+              !userData && !isUserLoading ? (
+                <Signup />
+              ) : (
+                <Navigate to="/dashboard" replace />
+              )
             }
           />
           <Route
             path="/forget-password"
             element={
-              !userData ? (
+              !userData && !isUserLoading ? (
                 <ForgetPassword />
               ) : (
                 <Navigate to="/dashboard" replace />

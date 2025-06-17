@@ -8,23 +8,25 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const { userData, apiUrl } = useDashboardContext();
+  const { userData, apiUrl, isUserLoading } = useDashboardContext();
 
   useEffect(() => {
-    if (userData) {
+    if (userData && !isUserLoading) {
       navigate("/dashboard");
     }
-  }, [userData, navigate]);
+  }, [userData, navigate, isUserLoading]);
 
   const handleSignup = async (event) => {
     setLoading(true);
     event.preventDefault();
     const form = event.currentTarget;
     const data = {
+      username: form.elements.namedItem("username").value,
       firstName: form.elements.namedItem("firstname").value,
       lastName: form.elements.namedItem("lastname").value,
       email: form.elements.namedItem("email").value,
       password: form.elements.namedItem("password").value,
+      confirmPassword: form.elements.namedItem("confirmPassword").value,
     };
 
     try {
@@ -105,6 +107,22 @@ function Signup() {
         >
           <div className="mb-4">
             <label
+              className="block text-sm font-medium mb-2"
+              htmlFor="username"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label
               className=" inline text-sm font-medium mb-2"
               htmlFor="firstname"
             >
@@ -153,7 +171,15 @@ function Signup() {
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your password"
             />
-            <div id="view-password">
+            <label htmlFor="confirmed-password">Confirm Password</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="confirmPassword"
+              name="confirmPassword"
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Confirm your password"
+            />
+            <div className="flex items-center">
               <input
                 type="checkbox"
                 id="show-password"
