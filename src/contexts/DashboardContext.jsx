@@ -26,7 +26,7 @@ export const DashboardProvider = ({ children }) => {
   const refreshUserData = async () => {
     setIsUserLoading(true);
     try {
-      const response = await fetch(apiUrl + "/auth/users/me", {
+      const response = await fetch(apiUrl + "/users/me", {
         method: "GET",
         credentials: "include",
       });
@@ -45,7 +45,7 @@ export const DashboardProvider = ({ children }) => {
   const handleUpdateUser = async (formData) => {
     setIsUserLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/auth/users/me`, {
+      const response = await fetch(`${apiUrl}/users/me`, {
         method: "PATCH",
         credentials: "include",
         headers: {

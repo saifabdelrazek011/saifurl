@@ -67,6 +67,7 @@ function Dashboard() {
               </span>
             </p>
           </div>
+
           <div className="flex gap-3 items-center">
             {/* Status Badge */}
             <a
@@ -74,6 +75,7 @@ function Dashboard() {
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:block"
+              title="View detailed service status"
             >
               <img
                 src={
@@ -82,9 +84,20 @@ function Dashboard() {
                     : "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
                 }
                 alt="Service Status"
-                className="h-6 mr-2"
+                className="h-6 mr-2 drop-shadow-lg rounded-full border border-white"
               />
             </a>
+            <Link
+              to="/developer"
+              className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
+                theme === "dark"
+                  ? "bg-blue-900 text-white hover:bg-blue-700"
+                  : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+              }`}
+              aria-label="Developer"
+            >
+              Developer
+            </Link>
             <Link
               to="/profile"
               className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
@@ -201,6 +214,37 @@ function Dashboard() {
             GitHub
           </a>
         </div>
+        <p className="mt-2">
+          © {new Date().getFullYear()} Saif Abdelrazek. All rights reserved.
+        </p>
+        <p className="mt-1">
+          <a
+            href="https://saifabdelrazek.com/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`hover:underline ${
+              theme === "dark"
+                ? "text-blue-300 hover:text-red-300"
+                : "text-blue-300 hover:text-red-400"
+            }`}
+          >
+            Privacy Policy
+          </a>
+
+          {" | "}
+          <a
+            href="https://saifabdelrazek.com/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`hover:underline ${
+              theme === "dark"
+                ? "text-blue-300 hover:text-red-300"
+                : "text-blue-300 hover:text-red-400"
+            }`}
+          >
+            Terms of Service
+          </a>
+        </p>
       </footer>
     </div>
   );

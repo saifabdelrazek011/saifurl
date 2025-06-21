@@ -293,7 +293,6 @@ const Profile = () => {
                     ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
                     : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
                 }`}
-                required
               />
             </div>
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">
@@ -337,7 +336,6 @@ const Profile = () => {
                     ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
                     : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
                 }`}
-                required
               />
             </div>
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">
@@ -358,7 +356,6 @@ const Profile = () => {
                     ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
                     : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
                 }`}
-                required
               />
             </div>
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">

@@ -11,6 +11,7 @@ import Signup from "./pages/auth/Signup";
 import ShortUrlRedirect from "./pages/ShortUrlRedirect";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import NotFound from "./pages/404";
+import Developer from "./pages/Developer";
 
 function App() {
   const { userData, isUserLoading } = useDashboardContext();
@@ -35,6 +36,16 @@ function App() {
             element={
               userData && !isUserLoading ? (
                 <Profile />
+              ) : (
+                <Navigate to="/signin" replace />
+              )
+            }
+          />
+          <Route
+            path="/developer"
+            element={
+              userData && !isUserLoading ? (
+                <Developer />
               ) : (
                 <Navigate to="/signin" replace />
               )

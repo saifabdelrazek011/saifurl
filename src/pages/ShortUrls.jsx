@@ -21,14 +21,24 @@ function Shorturls() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const urlsPerPage = 10;
+
   useEffect(() => {
     fetchShortUrls();
+    // eslint-disable-next-line
   }, []);
+
+  // Reset to page 1 when URLs change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [shortUrls.length]);
 
   const fetchShortUrls = async () => {
     setLoading(true);
     try {
-      const response = await fetch(apiUrl + "/shorturls/mine", {
+      const response = await fetch(apiUrl + "/shorturls", {
         method: "GET",
         credentials: "include",
       });
@@ -106,6 +116,7 @@ function Shorturls() {
       setError(error.message);
     }
   };
+
   useEffect(() => {
     if (error) {
       setTimeout(() => {
@@ -113,6 +124,12 @@ function Shorturls() {
       }, 5000);
     }
   }, [error]);
+
+  // Pagination logic
+  const indexOfLastUrl = currentPage * urlsPerPage;
+  const indexOfFirstUrl = indexOfLastUrl - urlsPerPage;
+  const currentUrls = shortUrls.slice(indexOfFirstUrl, indexOfLastUrl);
+  const totalPages = Math.ceil(shortUrls.length / urlsPerPage);
 
   return (
     <div
@@ -235,7 +252,7 @@ function Shorturls() {
                 </td>
               </tr>
             ) : (
-              shortUrls.map((url) =>
+              currentUrls.map((url) =>
                 editId === url._id ? (
                   <tr key={url._id}>
                     <td className="py-2 px-4 border-b">
@@ -367,6 +384,39 @@ function Shorturls() {
         </table>
       </div>
 
+      {/* Pagination Controls */}
+      {userData.user.verified && totalPages > 1 && (
+        <div className="flex justify-center items-center gap-2 mt-6">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold disabled:opacity-50"
+          >
+            Prev
+          </button>
+          {[...Array(totalPages)].map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentPage(idx + 1)}
+              className={`px-3 py-1 rounded font-semibold ${
+                currentPage === idx + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-blue-100"
+              }`}
+            >
+              {idx + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
+
       <div className="mt-8 text-right">
         {userData.user.verified && !creating && (
           <button
@@ -375,12 +425,34 @@ function Shorturls() {
               theme === "dark" ? "border border-blue-900" : ""
             }`}
           >
-            + Create New Short URL
+            <svg
+              className="w-5 h-5 inline-block mr-2"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            Create New Short URL
           </button>
+        )}
+        {!userData.user.verified && (
+          <Link
+            to="/profile"
+            className={`inline-block bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-lg shadow hover:from-red-600 hover:to-blue-600 transition font-semibold ${
+              theme === "dark" ? "border border-blue-900" : ""
+            }`}
+          >
+            Verify Email
+          </Link>
         )}
       </div>
     </div>
   );
 }
-
 export default Shorturls;
