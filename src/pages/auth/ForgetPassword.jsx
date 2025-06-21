@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useDashboardContext } from "../../contexts/DashboardContext";
+import { useShorturlsContext } from "../../contexts/ShorturlsContext";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
@@ -8,6 +10,7 @@ const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -111,13 +114,25 @@ const ForgetPassword = () => {
             <div>
               <label className="block mb-1 font-medium">New Password:</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 disabled={loading}
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
               />
+              <div className="flex items-center mt-2">
+                <input
+                  type="checkbox"
+                  id="show-password"
+                  className="mr-2"
+                  checked={showPassword}
+                  onChange={() => setShowPassword((v) => !v)}
+                />
+                <label htmlFor="show-password" className="text-sm">
+                  Show Password
+                </label>
+              </div>
             </div>
             <button
               type="submit"

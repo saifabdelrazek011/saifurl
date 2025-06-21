@@ -1,8 +1,6 @@
-import React, { use, useEffect } from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useDashboardContext } from "../../contexts/DashboardContext";
-import { Link } from "react-router-dom";
 
 function Signin() {
   const navigate = useNavigate();
@@ -17,11 +15,6 @@ function Signin() {
       navigate("/dashboard");
     }
   }, [userData, isUserLoading, navigate]);
-
-  const errorRegion = document.getElementById("error-region");
-  if (errorRegion) {
-    errorRegion.innerHTML = "";
-  }
 
   const handleSignin = async (event) => {
     event.preventDefault();
@@ -48,12 +41,10 @@ function Signin() {
         return;
       }
 
-      const result = await response.json();
-      setErrorMessage("Signin successful! Redirecting...");
+      await response.json();
+      setErrorMessage(null);
       form.reset();
       setShowPassword(false);
-
-      setErrorMessage(null);
       await refreshUserData();
     } catch (error) {
       console.error("Error during signin:", error);
@@ -62,9 +53,18 @@ function Signin() {
       setLoading(false);
     }
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
+        <div className="mb-4 text-center">
+          <Link
+            to="/"
+            className="text-blue-600 hover:underline text-sm inline-block"
+          >
+            ← Back to Home
+          </Link>
+        </div>
         <h2 className="text-2xl font-bold mb-6 text-center">
           Sign In to <span className="text-blue-600">SaifURL</span>
         </h2>
@@ -95,6 +95,7 @@ function Signin() {
             <input
               type="email"
               id="email"
+              name="email"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
             />
@@ -109,6 +110,7 @@ function Signin() {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
+              name="password"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your password"
             />
@@ -140,6 +142,14 @@ function Signin() {
           Don't have an account?{" "}
           <Link to={"/signup"} className="text-blue-600 hover:underline">
             Sign Up
+          </Link>
+        </p>
+        <p className="mt-2 text-center text-sm text-gray-600">
+          <Link
+            to={"/forget-password"}
+            className="text-blue-600 hover:underline"
+          >
+            Forgot Password?
           </Link>
         </p>
       </div>

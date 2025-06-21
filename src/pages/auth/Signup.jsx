@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDashboardContext } from "../../contexts/DashboardContext";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Signup() {
   const navigate = useNavigate();
@@ -57,16 +56,8 @@ function Signup() {
       }
 
       setErrorMessage("Signup successful! Redirecting...");
-      form.reset(); // Reset the form fields after successful signup
-      setShowPassword(false); // Reset password visibility state
-      const passwordInput = document.getElementById("password");
-      if (passwordInput) {
-        passwordInput.type = "password"; // Reset the password input type
-      }
-      const showPasswordCheckbox = document.getElementById("show-password");
-      if (showPasswordCheckbox) {
-        showPasswordCheckbox.checked = false; // Reset the checkbox state
-      }
+      form.reset();
+      setShowPassword(false);
       setErrorMessage(null);
 
       navigate("/signin");
@@ -79,15 +70,24 @@ function Signup() {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setErrorMessage(null);
-    }, 5000);
+    if (errorMessage) {
+      const timer = setTimeout(() => setErrorMessage(null), 5000);
+      return () => clearTimeout(timer);
+    }
   }, [errorMessage]);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+        <div className="mb-4 text-center">
+          <Link
+            to="/"
+            className="text-blue-600 hover:underline text-sm inline-block"
+          >
+            ← Back to Home
+          </Link>
+        </div>
+        <h2 className="text-2xl font-bold mb-4 text-center">
           Sign Up to <span className="text-blue-600">SaifURL</span>
         </h2>
         <a
@@ -98,7 +98,7 @@ function Signup() {
           <img
             src="https://uptime.saifabdelrazek.com/api/badge/7/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
             alt="Service Status"
-            className="  h-6 mb-4 mx-auto animate-pulse transition-all duration-500 ease-in-out transform hover:scale-105"
+            className="h-6 mb-4 mx-auto animate-pulse transition-all duration-500 ease-in-out transform hover:scale-105"
           />
         </a>
         {errorMessage && (
@@ -107,13 +107,13 @@ function Signup() {
           </div>
         )}
         <form
-          className="space-y-4"
+          className="space-y-3 max-h-[60vh] overflow-y-auto pr-2"
           id="signup-form"
           onSubmit={!loading ? handleSignup : null}
         >
-          <div className="mb-4">
+          <div>
             <label
-              className="block text-sm font-medium mb-2"
+              className="block text-sm font-medium mb-1"
               htmlFor="username"
             >
               Username
@@ -127,46 +127,53 @@ function Signup() {
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              className=" inline text-sm font-medium mb-2"
-              htmlFor="firstname"
-            >
-              First name
-            </label>
-            <input
-              type="text"
-              id="firstname"
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your firstname"
-            />
-            <label
-              className="inline text-sm font-medium mb-2"
-              htmlFor="lastname"
-            >
-              Last name
-            </label>
-            <input
-              type="text"
-              id="lastname"
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your lastname"
-            />
+          <div className="flex gap-2">
+            <div className="flex-1">
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="firstname"
+              >
+                First name
+              </label>
+              <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="First name"
+              />
+            </div>
+            <div className="flex-1">
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="lastname"
+              >
+                Last name
+              </label>
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Last name"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="email">
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="email">
               Email
             </label>
             <input
               type="email"
               id="email"
+              name="email"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
             />
           </div>
-          <div className="mb-4">
+          <div>
             <label
-              className="block text-sm font-medium mb-2"
+              className="block text-sm font-medium mb-1"
               htmlFor="password"
             >
               Password
@@ -174,10 +181,18 @@ function Signup() {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
+              name="password"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your password"
             />
-            <label htmlFor="confirmed-password">Confirm Password</label>
+          </div>
+          <div>
+            <label
+              className="block text-sm font-medium mb-1"
+              htmlFor="confirmPassword"
+            >
+              Confirm Password
+            </label>
             <input
               type={showPassword ? "text" : "password"}
               id="confirmPassword"
@@ -185,19 +200,19 @@ function Signup() {
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Confirm your password"
             />
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="show-password"
-                className="mt-2"
-                onChange={(e) => {
-                  setShowPassword(e.target.checked);
-                }}
-              />
-              <label htmlFor="show-password" className="ml-2 text-sm">
-                Show Password
-              </label>
-            </div>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="show-password"
+              className="mt-1"
+              onChange={(e) => {
+                setShowPassword(e.target.checked);
+              }}
+            />
+            <label htmlFor="show-password" className="ml-2 text-sm">
+              Show Password
+            </label>
           </div>
           <button
             type="submit"
@@ -220,5 +235,4 @@ function Signup() {
     </div>
   );
 }
-
 export default Signup;
