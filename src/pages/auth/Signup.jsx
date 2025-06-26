@@ -62,7 +62,6 @@ function Signup() {
 
       navigate("/signin");
     } catch (error) {
-      console.error("Error during signup:", error);
       setErrorMessage("An error occurred during signup. Please try again.");
     } finally {
       setLoading(false);

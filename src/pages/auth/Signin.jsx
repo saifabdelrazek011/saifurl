@@ -47,7 +47,6 @@ function Signin() {
       setShowPassword(false);
       await refreshUserData();
     } catch (error) {
-      console.error("Error during signin:", error);
       setErrorMessage("An error occurred. Please try again later.");
     } finally {
       setLoading(false);

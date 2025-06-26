@@ -20,10 +20,12 @@ export const DashboardProvider = ({ children }) => {
   const [userData, setUserData] = useState(undefined);
   const [isUserLoading, setIsUserLoading] = useState(true);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const apiUrl =
     import.meta.env.VITE_API_URL || "https://api.saifabdelrazek.com/v1";
 
   const refreshUserData = async () => {
+    setIsAuthenticated(false);
     setIsUserLoading(true);
     try {
       const response = await fetch(apiUrl + "/users/me", {
@@ -35,6 +37,7 @@ export const DashboardProvider = ({ children }) => {
       }
       const data = await response.json();
       setUserData(data);
+      setIsAuthenticated(true);
     } catch (error) {
       setUserData(undefined);
     } finally {
@@ -90,6 +93,8 @@ export const DashboardProvider = ({ children }) => {
     <DashboardContext.Provider
       value={{
         userData,
+        isUserLoading,
+        isAuthenticated,
         refreshUserData,
         handleUpdateUser,
         theme,

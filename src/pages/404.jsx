@@ -1,18 +1,31 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const NotFound = () => (
-  <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-900 font-sans">
-    <h1 className="text-7xl font-bold m-0">404</h1>
-    <p className="text-2xl mt-4 mb-2 text-center">
-      Sorry, the page you are looking for does not exist.
-    </p>
-    <a
-      href="/"
-      className="mt-6 px-8 py-3 bg-blue-600 text-white rounded-lg font-medium transition-colors hover:bg-blue-700"
-    >
-      Go Home
-    </a>
-  </div>
-);
+const NotFound = () => {
+  const navigate = useNavigate();
+  const lastValidRoute = localStorage.getItem("lastValidRoute") || "/";
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <h1 className="text-6xl font-extrabold text-blue-700 mb-4">404</h1>
+      <p className="text-xl text-gray-700 mb-8">
+        Oops! The page you're looking for doesn't exist.
+      </p>
+      <button
+        onClick={() => navigate(lastValidRoute, { replace: true })}
+        className="px-6 py-3 rounded-full bg-blue-600 text-white font-semibold text-lg shadow hover:bg-blue-700 transition"
+      >
+        Go Back
+      </button>
+      <p className="mt-2 text-sm text-gray-500">
+        Or return to the{" "}
+        <Link to="/" className="text-blue-600 hover:underline">
+          homepage
+        </Link>
+        .
+      </p>
+    </div>
+  );
+};
 
 export default NotFound;

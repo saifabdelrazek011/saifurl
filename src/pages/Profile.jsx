@@ -10,7 +10,7 @@ const Profile = () => {
     toggleTheme,
     isUserLoading,
     apiUrl,
-    refreshUserData,
+    handleCheckUserData,
   } = useDashboardContext();
   const [user, setUser] = useState(userData?.user || null);
   const [formData, setFormData] = useState({
@@ -179,7 +179,7 @@ const Profile = () => {
       setVerifySuccess("Verification successful!");
       setProvidedCode("");
       setVerificationSent(false);
-      refreshUserData();
+      handleCheckUserData();
     } catch (error) {
       setVerifyError(error.message || "Error verifying code.");
     } finally {

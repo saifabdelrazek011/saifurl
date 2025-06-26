@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import "./index.css";
-import App from "./router.jsx";
+import App from "./App.jsx";
 import ReactDOM from "react-dom/client";
 import { DashboardProvider } from "./contexts/DashboardContext.jsx";
 
