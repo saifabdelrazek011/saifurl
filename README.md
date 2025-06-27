@@ -1,6 +1,6 @@
-# SaifURL
+# SaifURL Frontend
 
-A modern, fullstack URL shortener service with user authentication, dashboard, custom domains, and more.
+A modern, fullstack URL shortener **frontend** built with React, featuring user authentication, dashboard, custom domains, and more.
 
 ---
 
@@ -58,8 +58,9 @@ src/
   components/         # Reusable UI components
   contexts/           # React context providers (Dashboard, Shorturls)
   pages/              # Main pages (Dashboard, Profile, Auth, etc.)
-  router.jsx          # Main router with HashRouter and routes
-  main.jsx            # App entry point
+  routers/            # Main router and route utilities
+  App.jsx             # App entry point
+  main.jsx            # ReactDOM entry
 ```
 
 ---
@@ -77,6 +78,15 @@ src/
 
 ---
 
+## API
+
+This frontend connects to the [SaifAPI](https://github.com/saifabdelrazek011/saifapi) backend service.
+
+- **API repository:** [https://github.com/saifabdelrazek011/saifapi](https://github.com/saifabdelrazek011/saifapi)
+- **Default API URL:** `https://api.saifabdelrazek.com/v1`
+
+---
+
 ## Deployment
 
 - The app uses **HashRouter** for static hosting (e.g., Netlify, Vercel, GitHub Pages).
@@ -88,9 +98,6 @@ src/
 
 - Built by [Saif Abdelrazek](https://saifabdelrazek.com)
 - Status badge powered by [Uptime Kuma](https://status.saifabdelrazek.com)
+- API backend: [saifabdelrazek011/saifapi](https://github.com/saifabdelrazek011/saifapi)
 
 ---
-
-## License
-
-MIT License
