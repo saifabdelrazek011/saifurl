@@ -331,10 +331,11 @@ const Profile = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
+                readOnly
+                className={`flex-1 px-3 py-2 border rounded transition-all duration-300 ${
                   theme === "dark"
-                    ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
-                    : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
+                    ? "bg-gray-800/50 border-gray-700 text-gray-400 cursor-not-allowed opacity-60"
+                    : "bg-gray-100/70 border-gray-300 text-gray-500 cursor-not-allowed opacity-75"
                 }`}
               />
             </div>
