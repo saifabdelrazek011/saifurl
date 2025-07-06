@@ -3,20 +3,14 @@ import { useDashboardContext } from "../contexts/DashboardContext.jsx";
 import Shorturls from "./ShortUrls.jsx";
 import { useNavigate, Link } from "react-router-dom";
 import { useShorturlsContext } from "../contexts/ShorturlsContext.jsx";
+import SignoutBtn from "../components/SignoutBtn.jsx";
 
 function Dashboard() {
   const navigate = useNavigate();
-  const {
-    userData,
-    apiUrl,
-    refreshUserData,
-    theme,
-    toggleTheme,
-    isUserLoading,
-  } = useDashboardContext();
+  const { userData, theme, toggleTheme, isUserLoading } = useDashboardContext();
   const { shortDomain, setShortDomain } = useShorturlsContext();
   const [user, setUser] = useState(userData?.user || null);
-  const [loadingSignOut, setLoadingSignOut] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!userData && !isUserLoading) {
@@ -27,15 +21,8 @@ function Dashboard() {
     }
   }, [userData, navigate, isUserLoading, user]);
 
-  const handleSignout = async () => {
-    setLoadingSignOut(true);
-    await fetch(apiUrl + "/auth/signout", {
-      method: "POST",
-      credentials: "include",
-    });
-    setUser(null);
-    await refreshUserData();
-    setLoadingSignOut(false);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -46,94 +33,242 @@ function Dashboard() {
           : "bg-gradient-to-br from-blue-700 via-white to-red-600"
       } transition-colors duration-300`}
     >
-      <div className="max-w-5xl mx-auto py-12 px-4">
+      <div className="max-w-5xl mx-auto py-6 md:py-12 px-4">
         <div
-          className={`flex justify-between items-center mb-6 ${
+          className={`mb-6 ${
             theme === "dark"
               ? "bg-gradient-to-r from-gray-800 to-blue-900"
               : "bg-gradient-to-r from-blue-600 to-red-500"
-          } rounded-xl shadow-xl p-6 border-4 border-white`}
+          } rounded-xl shadow-xl p-4 md:p-6 border-4 border-white`}
         >
-          <div>
-            <h1 className="text-4xl font-extrabold text-white mb-1 drop-shadow">
-              Dashboard
-            </h1>
-            <p className="text-xl text-white">
-              Welcome,{" "}
-              <span className="font-bold text-yellow-200">
-                {user
-                  ? `${user?.firstName} ${user?.lastName ? user?.lastName : ""}`
-                  : ""}
-              </span>
-            </p>
+          {/* Mobile Header */}
+          <div className="flex justify-between items-center md:hidden">
+            <div className="flex-1">
+              <h1 className="text-2xl font-extrabold text-white drop-shadow">
+                Dashboard
+              </h1>
+              <p className="text-sm text-white">
+                Welcome,{" "}
+                <span className="font-bold text-yellow-200">
+                  {user ? `${user?.firstName}` : ""}
+                </span>
+              </p>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={toggleMobileMenu}
+              className="p-2 rounded-lg bg-white/20 text-white hover:bg-white/30 transition"
+              aria-label="Toggle mobile menu"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
           </div>
 
-          <div className="flex gap-3 items-center">
-            {/* Status Badge */}
-            <a
-              href="https://status.saifabdelrazek.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:block"
-              title="View detailed service status"
-            >
-              <img
-                src={
+          {/* Desktop Header */}
+          <div className="hidden md:flex justify-between items-center">
+            <div>
+              <h1 className="text-4xl font-extrabold text-white mb-1 drop-shadow">
+                Dashboard
+              </h1>
+              <p className="text-xl text-white">
+                Welcome,{" "}
+                <span className="font-bold text-yellow-200">
+                  {user
+                    ? `${user?.firstName} ${
+                        user?.lastName ? user?.lastName : ""
+                      }`
+                    : ""}
+                </span>
+              </p>
+            </div>
+
+            <div className="flex gap-3 items-center">
+              {/* Status Badge */}
+              <a
+                href="https://status.saifabdelrazek.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden lg:block"
+                title="View detailed service status"
+              >
+                <img
+                  src={
+                    theme === "dark"
+                      ? "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%2360a5fa&downColor=%23f87171&pendingColor=%23fbbf24&maintenanceColor=%234ade80&style=for-the-badge"
+                      : "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+                  }
+                  alt="Service Status"
+                  className="h-6 mr-2 drop-shadow-lg rounded-full border border-white"
+                />
+              </a>
+              <Link
+                to="/developer"
+                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
                   theme === "dark"
-                    ? "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%2360a5fa&downColor=%23f87171&pendingColor=%23fbbf24&maintenanceColor=%234ade80&style=for-the-badge"
-                    : "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
-                }
-                alt="Service Status"
-                className="h-6 mr-2 drop-shadow-lg rounded-full border border-white"
-              />
-            </a>
-            <Link
-              to="/developer"
-              className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-                theme === "dark"
-                  ? "bg-blue-900 text-white hover:bg-blue-700"
-                  : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-              }`}
-              aria-label="Developer"
-            >
-              Developer
-            </Link>
-            <Link
-              to="/profile"
-              className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-                theme === "dark"
-                  ? "bg-blue-900 text-white hover:bg-blue-700"
-                  : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-              }`}
-              aria-label="Profile"
-            >
-              Profile
-            </Link>
-            <button
-              onClick={toggleTheme}
-              className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-                theme === "dark"
-                  ? "bg-blue-700 text-white hover:bg-blue-600"
-                  : "bg-white text-blue-700 hover:bg-blue-100"
-              }`}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
-            </button>
-            <button
-              onClick={!loadingSignOut ? handleSignout : null}
-              className="px-4 py-2 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 shadow transition"
-            >
-              {loadingSignOut ? (
-                <span className="animate-spin">🔄 Signing Out...</span>
-              ) : (
-                "Sign Out"
-              )}
-            </button>
+                    ? "bg-blue-900 text-white hover:bg-blue-700"
+                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                }`}
+                aria-label="Developer"
+              >
+                Developer
+              </Link>
+              <Link
+                to="/profile"
+                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
+                  theme === "dark"
+                    ? "bg-blue-900 text-white hover:bg-blue-700"
+                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                }`}
+                aria-label="Profile"
+              >
+                Profile
+              </Link>
+              <Link
+                to="/contact"
+                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
+                  theme === "dark"
+                    ? "bg-blue-900 text-white hover:bg-blue-700"
+                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                }`}
+                aria-label="Contact"
+              >
+                Contact
+              </Link>
+              <Link
+                to="/bots"
+                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
+                  theme === "dark"
+                    ? "bg-blue-900 text-white hover:bg-blue-700"
+                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                }`}
+                aria-label="Bots"
+              >
+                Bots
+              </Link>
+              <button
+                onClick={toggleTheme}
+                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
+                  theme === "dark"
+                    ? "bg-blue-700 text-white hover:bg-blue-600"
+                    : "bg-white text-blue-700 hover:bg-blue-100"
+                }`}
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? "🌙" : "☀️"}
+              </button>
+              <SignoutBtn />
+            </div>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 pt-4 border-t border-white/20">
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                <Link
+                  to="/developer"
+                  className={`px-3 py-2 rounded-lg font-semibold shadow transition text-center text-sm ${
+                    theme === "dark"
+                      ? "bg-blue-900 text-white hover:bg-blue-700"
+                      : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Developer
+                </Link>
+                <Link
+                  to="/profile"
+                  className={`px-3 py-2 rounded-lg font-semibold shadow transition text-center text-sm ${
+                    theme === "dark"
+                      ? "bg-blue-900 text-white hover:bg-blue-700"
+                      : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/contact"
+                  className={`px-3 py-2 rounded-lg font-semibold shadow transition text-center text-sm ${
+                    theme === "dark"
+                      ? "bg-blue-900 text-white hover:bg-blue-700"
+                      : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Contact
+                </Link>
+                <Link
+                  to="/bots"
+                  className={`px-3 py-2 rounded-lg font-semibold shadow transition text-center text-sm ${
+                    theme === "dark"
+                      ? "bg-blue-900 text-white hover:bg-blue-700"
+                      : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Bots
+                </Link>
+              </div>
+
+              {/* Mobile Actions Row */}
+              <div className="flex gap-2 items-center justify-between">
+                <button
+                  onClick={toggleTheme}
+                  className={`flex-1 px-3 py-2 rounded-lg font-semibold shadow transition text-sm ${
+                    theme === "dark"
+                      ? "bg-blue-700 text-white hover:bg-blue-600"
+                      : "bg-white text-blue-700 hover:bg-blue-100"
+                  }`}
+                >
+                  {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
+                </button>
+
+                {/* Status Badge for Mobile */}
+                <a
+                  href="https://status.saifabdelrazek.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0"
+                  title="View service status"
+                >
+                  <img
+                    src={
+                      theme === "dark"
+                        ? "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%2360a5fa&downColor=%23f87171&pendingColor=%23fbbf24&maintenanceColor=%234ade80&style=for-the-badge"
+                        : "https://uptime.saifabdelrazek.com/api/badge/3/status?upColor=%233b82f6&downColor=%23ef4444&pendingColor=%23f59e42&maintenanceColor=%2322c55e&style=for-the-badge"
+                    }
+                    alt="Service Status"
+                    className="h-6 drop-shadow-lg rounded-full border border-white"
+                  />
+                </a>
+              </div>
+
+              {/* Sign Out Button for Mobile */}
+              <div className="mt-3 pt-3 border-t border-white/20">
+                <div className="w-full">
+                  <SignoutBtn />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
+
         <Shorturls />
       </div>
+
       {/* Improved Short URL domains section with theme */}
       <section
         className={`max-w-5xl mx-auto px-4 py-8 mt-8 rounded-xl shadow-lg flex flex-col items-center ${
@@ -142,16 +277,16 @@ function Dashboard() {
             : "bg-gradient-to-r from-blue-600 to-red-500"
         }`}
       >
-        <h2 className="text-2xl font-bold text-white mb-4 drop-shadow">
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-4 drop-shadow text-center">
           Available Short Domains
         </h2>
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
           {[
             { domain: "sa.died.pw", url: "https://sa.died.pw" },
             { domain: "sa.ix.tc", url: "https://sa.ix.tc" },
           ].map(({ domain }) => (
             <button
-              className={`transition text-lg font-semibold px-6 py-3 rounded-lg shadow border-2 ${
+              className={`transition text-base md:text-lg font-semibold px-4 md:px-6 py-3 rounded-lg shadow border-2 ${
                 theme === "dark"
                   ? "bg-gray-900 hover:bg-blue-900 text-blue-200 border-blue-800 hover:border-red-700"
                   : "bg-white/90 hover:bg-white text-blue-700 border-blue-200 hover:border-red-400"
@@ -218,32 +353,16 @@ function Dashboard() {
           © {new Date().getFullYear()} Saif Abdelrazek. All rights reserved.
         </p>
         <p className="mt-1">
-          <a
-            href="https://saifabdelrazek.com/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/contact"
             className={`hover:underline ${
               theme === "dark"
                 ? "text-blue-300 hover:text-red-300"
                 : "text-blue-300 hover:text-red-400"
             }`}
           >
-            Privacy Policy
-          </a>
-
-          {" | "}
-          <a
-            href="https://saifabdelrazek.com/terms"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`hover:underline ${
-              theme === "dark"
-                ? "text-blue-300 hover:text-red-300"
-                : "text-blue-300 hover:text-red-400"
-            }`}
-          >
-            Terms of Service
-          </a>
+            Contact us
+          </Link>
         </p>
       </footer>
     </div>

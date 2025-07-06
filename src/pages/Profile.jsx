@@ -679,6 +679,16 @@ const Profile = () => {
         >
           Back to Dashboard
         </button>
+        <button
+          onClick={() => navigate("/contact")}
+          className={`ml-4 px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 ${
+            theme === "dark"
+              ? "bg-blue-600 hover:bg-blue-700"
+              : "bg-red-500 hover:bg-red-600"
+          }`}
+        >
+          Contact us
+        </button>
       </div>
     </div>
   );

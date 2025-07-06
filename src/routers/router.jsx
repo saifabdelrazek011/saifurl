@@ -11,6 +11,7 @@ import Developer from "../pages/Developer";
 import RouteTracker from "./RouteTracker";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AuthRoute from "./routes/AuthRoute";
+import Bots from "../pages/Bots";
 
 function Router() {
   return (
@@ -43,6 +44,7 @@ function Router() {
             }
           />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/bots" element={<Bots />} />
           <Route
             path="/signin"
             element={
