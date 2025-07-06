@@ -93,6 +93,7 @@ export const DashboardProvider = ({ children }) => {
     <DashboardContext.Provider
       value={{
         userData,
+        setUser: setUserData,
         isUserLoading,
         isAuthenticated,
         refreshUserData,
