@@ -143,12 +143,12 @@ const Bots = () => {
 
           {/* Bots Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {/* Telegram Bot Card - Now In Development */}
+            {/* Telegram Bot Card - Now Working */}
             <div
-              className={`backdrop-blur-sm rounded-2xl shadow-lg p-8 border opacity-75 ${
+              className={`backdrop-blur-sm rounded-2xl shadow-lg p-8 border ${
                 theme === "dark"
-                  ? "bg-gray-800/60 border-gray-700/20"
-                  : "bg-white/60 border-white/20"
+                  ? "bg-gray-800/80 border-gray-700/20"
+                  : "bg-white/80 border-white/20"
               }`}
             >
               <div className="text-center">
@@ -173,22 +173,32 @@ const Bots = () => {
                     theme === "dark" ? "text-gray-300" : "text-gray-600"
                   }`}
                 >
-                  Coming soon! Shorten URLs directly in Telegram chats.
+                  Shorten URLs directly in Telegram chats and channels. Fast and
+                  reliable!
                 </p>
                 <div className="space-y-3">
-                  <button
-                    disabled
-                    className="block w-full py-3 px-6 rounded-lg bg-gray-400 text-white font-semibold cursor-not-allowed"
-                  >
-                    Coming Soon
-                  </button>
-                  <p
-                    className={`text-xs ${
-                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                  <a
+                    href="https://t.me/saifurl_bot"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block w-full py-3 px-6 rounded-lg font-semibold transition duration-200 text-center ${
+                      theme === "dark"
+                        ? "bg-blue-600 text-white hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98]"
+                        : "bg-blue-600 text-white hover:bg-blue-700 hover:scale-[1.02] active:scale-[0.98]"
                     }`}
                   >
-                    In Development
-                  </p>
+                    Start Bot
+                  </a>
+                  <div className="flex items-center justify-center">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                    <p
+                      className={`text-xs ${
+                        theme === "dark" ? "text-green-400" : "text-green-600"
+                      }`}
+                    >
+                      Active & Working
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -258,7 +268,7 @@ const Bots = () => {
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52-2.523A2.528 2.528 0 0 1 5.042 10.12a2.528 2.528 0 0 1 2.523 2.522 2.528 2.528 0 0 1-2.523 2.523m0 .881c1.882 0 3.404-1.522 3.404-3.404a3.407 3.407 0 0 0-3.404-3.404 3.407 3.407 0 0 0-3.404 3.404c0 1.882 1.522 3.404 3.404 3.404M5.042 7.041a2.528 2.528 0 0 1-2.52-2.523c0-1.392 1.131-2.523 2.52-2.523a2.528 2.528 0 0 1 2.523 2.523 2.528 2.528 0 0 1-2.523 2.523m0 .881c1.882 0 3.404-1.522 3.404-3.404A3.407 3.407 0 0 0 5.042.114a3.407 3.407 0 0 0-3.404 3.404c0 1.882 1.522 3.404 3.404 3.404m7.221 7.243a2.528 2.528 0 0 1-2.523-2.523A2.528 2.528 0 0 1 12.263 10.12a2.528 2.528 0 0 1 2.523 2.522 2.528 2.528 0 0 1-2.523 2.523m0 .881c1.882 0 3.404-1.522 3.404-3.404a3.407 3.407 0 0 0-3.404-3.404 3.407 3.407 0 0 0-3.404 3.404c0 1.882 1.522 3.404 3.404 3.404m7.221-.881a2.528 2.528 0 0 1-2.523-2.523A2.528 2.528 0 0 1 19.484 10.12a2.528 2.528 0 0 1 2.523 2.522 2.528 2.528 0 0 1-2.523 2.523m0 .881c1.882 0 3.404-1.522 3.404-3.404a3.407 3.407 0 0 0-3.404-3.404 3.407 3.407 0 0 0-3.404 3.404c0 1.882 1.522 3.404 3.404 3.404m-7.221-7.243a2.528 2.528 0 0 1-2.523-2.523c0-1.392 1.131-2.523 2.523-2.523a2.528 2.528 0 0 1 2.523 2.523 2.528 2.528 0 0 1-2.523 2.523m0 .881c1.882 0 3.404-1.522 3.404-3.404A3.407 3.407 0 0 0 12.263.114a3.407 3.407 0 0 0-3.404 3.404c0 1.882 1.522 3.404 3.404 3.404m7.221 15.204a2.528 2.528 0 0 1-2.523-2.523 2.528 2.528 0 0 1 2.523-2.523 2.528 2.528 0 0 1 2.523 2.523 2.528 2.528 0 0 1-2.523 2.523m0 .881c1.882 0 3.404-1.522 3.404-3.404a3.407 3.407 0 0 0-3.404-3.404 3.407 3.407 0 0 0-3.404 3.404c0 1.882 1.522 3.404 3.404 3.404M12.263 23.916a2.528 2.528 0 0 1-2.523-2.523 2.528 2.528 0 0 1 2.523-2.523 2.528 2.528 0 0 1 2.523 2.523 2.528 2.528 0 0 1-2.523 2.523m0 .881c1.882 0 3.404-1.522 3.404-3.404a3.407 3.407 0 0 0-3.404-3.404 3.407 3.407 0 0 0-3.404 3.404c0 1.882 1.522 3.404 3.404 3.404z" />
+                    <path d="M6.194 6.194A3.75 3.75 0 015.25 9v6a3.75 3.75 0 001.194 2.75L8.25 15.75V8.25l-2.056-2.056zM9.75 8.25v7.5l1.5 1.5h3l1.5-1.5v-7.5l-1.5-1.5h-3l-1.5 1.5zm8 0v7.5l2.056 2.056A3.75 3.75 0 0120.75 15V9a3.75 3.75 0 00-1.194-2.75L17.75 8.25z" />
                   </svg>
                 </div>
                 <h3
@@ -294,7 +304,7 @@ const Bots = () => {
             </div>
           </div>
 
-          {/* How to Use Section - Updated for future use */}
+          {/* How to Use Section - Updated for Telegram */}
           <div
             className={`backdrop-blur-sm rounded-2xl shadow-xl p-8 border mb-8 ${
               theme === "dark"
@@ -307,7 +317,7 @@ const Bots = () => {
                 theme === "dark" ? "text-gray-100" : "text-gray-800"
               }`}
             >
-              How SaifURL Bots Will Work
+              How to Use SaifURL Telegram Bot
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
@@ -336,7 +346,7 @@ const Bots = () => {
                     theme === "dark" ? "text-gray-300" : "text-gray-600"
                   }`}
                 >
-                  Search for the SaifURL bot in your messaging platform
+                  Click "Start Bot" above or search for @saifurl_bot in Telegram
                 </p>
               </div>
               <div className="text-center">
@@ -365,7 +375,7 @@ const Bots = () => {
                     theme === "dark" ? "text-gray-300" : "text-gray-600"
                   }`}
                 >
-                  Simply send any long URL to the bot
+                  Simply send any long URL to the bot in a private message
                 </p>
               </div>
               <div className="text-center">
@@ -394,7 +404,7 @@ const Bots = () => {
                     theme === "dark" ? "text-gray-300" : "text-gray-600"
                   }`}
                 >
-                  Receive your shortened URL instantly!
+                  Receive your shortened URL instantly and share it anywhere!
                 </p>
               </div>
             </div>
@@ -414,7 +424,7 @@ const Bots = () => {
                   theme === "dark" ? "text-gray-100" : "text-gray-800"
                 }`}
               >
-                Planned Bot Features
+                Telegram Bot Features
               </h3>
               <ul
                 className={`space-y-2 ${
@@ -423,13 +433,13 @@ const Bots = () => {
               >
                 <li className="flex items-center">
                   <svg
-                    className="w-5 h-5 text-yellow-500 mr-2"
+                    className="w-5 h-5 text-green-500 mr-2"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                       clipRule="evenodd"
                     />
                   </svg>
@@ -437,41 +447,41 @@ const Bots = () => {
                 </li>
                 <li className="flex items-center">
                   <svg
-                    className="w-5 h-5 text-yellow-500 mr-2"
+                    className="w-5 h-5 text-green-500 mr-2"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                       clipRule="evenodd"
                     />
                   </svg>
-                  API key authentication
+                  Works in private chats
                 </li>
                 <li className="flex items-center">
                   <svg
-                    className="w-5 h-5 text-yellow-500 mr-2"
+                    className="w-5 h-5 text-green-500 mr-2"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                       clipRule="evenodd"
                     />
                   </svg>
-                  Group and private chat support
+                  No registration required
                 </li>
                 <li className="flex items-center">
                   <svg
-                    className="w-5 h-5 text-yellow-500 mr-2"
+                    className="w-5 h-5 text-green-500 mr-2"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                       clipRule="evenodd"
                     />
                   </svg>
@@ -492,7 +502,7 @@ const Bots = () => {
                   theme === "dark" ? "text-gray-100" : "text-gray-800"
                 }`}
               >
-                Why Use Bots?
+                Coming Soon: More Platforms
               </h3>
               <ul
                 className={`space-y-2 ${
@@ -501,59 +511,59 @@ const Bots = () => {
               >
                 <li className="flex items-center">
                   <svg
-                    className="w-5 h-5 text-blue-500 mr-2"
+                    className="w-5 h-5 text-yellow-500 mr-2"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                       clipRule="evenodd"
                     />
                   </svg>
-                  No need to leave your chat
+                  Discord server integration
                 </li>
                 <li className="flex items-center">
                   <svg
-                    className="w-5 h-5 text-blue-500 mr-2"
+                    className="w-5 h-5 text-yellow-500 mr-2"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                       clipRule="evenodd"
                     />
                   </svg>
-                  Share shortened URLs instantly
+                  Slack workspace apps
                 </li>
                 <li className="flex items-center">
                   <svg
-                    className="w-5 h-5 text-blue-500 mr-2"
+                    className="w-5 h-5 text-yellow-500 mr-2"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                       clipRule="evenodd"
                     />
                   </svg>
-                  Perfect for mobile usage
+                  Advanced analytics
                 </li>
                 <li className="flex items-center">
                   <svg
-                    className="w-5 h-5 text-blue-500 mr-2"
+                    className="w-5 h-5 text-yellow-500 mr-2"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
                       clipRule="evenodd"
                     />
                   </svg>
-                  Available 24/7 when launched
+                  Custom domain support
                 </li>
               </ul>
             </div>
@@ -563,37 +573,37 @@ const Bots = () => {
           <div
             className={`mt-8 backdrop-blur-sm rounded-2xl shadow-xl p-6 border text-center ${
               theme === "dark"
-                ? "bg-yellow-900/30 border-yellow-700/50"
-                : "bg-yellow-50/80 border-yellow-200/50"
+                ? "bg-green-900/30 border-green-700/50"
+                : "bg-green-50/80 border-green-200/50"
             }`}
           >
             <div className="flex items-center justify-center mb-4">
               <svg
-                className="w-8 h-8 text-yellow-500 mr-3"
+                className="w-8 h-8 text-green-500 mr-3"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
                 <path
                   fillRule="evenodd"
-                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                   clipRule="evenodd"
                 />
               </svg>
               <h3
                 className={`text-xl font-bold ${
-                  theme === "dark" ? "text-yellow-300" : "text-yellow-800"
+                  theme === "dark" ? "text-green-300" : "text-green-800"
                 }`}
               >
-                All Bots Currently In Development
+                Telegram Bot Now Live!
               </h3>
             </div>
             <p
               className={`${
-                theme === "dark" ? "text-yellow-200" : "text-yellow-700"
+                theme === "dark" ? "text-green-200" : "text-green-700"
               }`}
             >
-              We're working hard to bring you bot support for Telegram, Discord,
-              and Slack. Stay tuned for updates on our{" "}
+              🎉 Our Telegram bot is now active and ready to use! Discord and
+              Slack bots are still in development. Follow our{" "}
               <a
                 href="https://status.saifabdelrazek.com"
                 target="_blank"
@@ -601,8 +611,8 @@ const Bots = () => {
                 className="underline hover:no-underline font-semibold"
               >
                 status page
-              </a>
-              !
+              </a>{" "}
+              for updates on other platforms.
             </p>
           </div>
         </div>
