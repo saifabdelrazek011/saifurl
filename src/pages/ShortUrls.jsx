@@ -42,7 +42,12 @@ function Shorturls() {
         method: "GET",
         credentials: "include",
       });
-      if (!response.ok) throw new Error("Failed to fetch short URLs");
+      if (response.status === 404) {
+        setShortUrls([]);
+        return;
+      } else if (!response.ok) {
+        setError("Failed to Get short URLs");
+      }
       const data = await response.json();
       setShortUrls(data.shortUrls || []);
     } catch (error) {
@@ -132,55 +137,27 @@ function Shorturls() {
   const totalPages = Math.ceil(shortUrls.length / urlsPerPage);
 
   return (
-    <div
-      className={`${
-        theme === "dark"
-          ? "bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900"
-          : "bg-gradient-to-br from-blue-50 via-white to-red-100"
-      } rounded-2xl shadow-lg p-8 border-2 border-blue-200 transition-colors duration-300`}
-    >
-      <h2
-        className={`text-2xl font-bold mb-6 drop-shadow ${
-          theme === "dark" ? "text-blue-200" : "text-blue-700"
-        }`}
-      >
+    <div className="bg-gradient-to-br from-blue-50 via-white to-red-100 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 rounded-2xl shadow-lg p-8 border-2 border-blue-200 dark:border-blue-900 transition-colors duration-300">
+      <h2 className="text-2xl font-bold mb-6 drop-shadow text-blue-700 dark:text-blue-200">
         Your Short URLs
       </h2>
       {userData.user.verified && error && (
-        <p
-          className={`${
-            theme === "dark" ? "text-red-400" : "text-red-500"
-          } mb-3`}
-        >
-          {error}
-        </p>
+        <p className="mb-3 text-red-500 dark:text-red-400">{error}</p>
       )}
       <div className="overflow-x-auto">
-        <table
-          className={`min-w-full rounded-xl border shadow ${
-            theme === "dark"
-              ? "bg-gray-900 border-blue-900"
-              : "bg-white border-blue-200"
-          }`}
-        >
+        <table className="min-w-full rounded-xl border shadow bg-white border-blue-200 dark:bg-gray-900 dark:border-blue-900">
           <thead>
-            <tr
-              className={
-                theme === "dark"
-                  ? "bg-gradient-to-r from-blue-900 to-red-900"
-                  : "bg-gradient-to-r from-blue-600 to-red-500"
-              }
-            >
-              <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
+            <tr className="bg-gradient-to-r from-blue-600 to-red-500 dark:from-blue-900 dark:to-red-900">
+              <th className="py-3 px-4 border-b border-blue-200 dark:border-blue-900 text-white font-semibold">
                 Original URL
               </th>
-              <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
+              <th className="py-3 px-4 border-b border-blue-200 dark:border-blue-900 text-white font-semibold">
                 Short URL
               </th>
-              <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
+              <th className="py-3 px-4 border-b border-blue-200 dark:border-blue-900 text-white font-semibold">
                 Clicks
               </th>
-              <th className="py-3 px-4 border-b border-blue-200 text-white font-semibold">
+              <th className="py-3 px-4 border-b border-blue-200 dark:border-blue-900 text-white font-semibold">
                 Actions
               </th>
             </tr>
@@ -260,7 +237,7 @@ function Shorturls() {
                         name="fullUrl"
                         value={editData.fullUrl}
                         onChange={handleEditChange}
-                        className="w-full px-2 py-1 rounded"
+                        className="w-full px-2 py-1 rounded bg-white text-blue-900 border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900 dark:focus:ring-blue-600"
                       />
                     </td>
                     <td className="py-2 px-4 border-b">
@@ -268,7 +245,7 @@ function Shorturls() {
                         name="shortUrl"
                         value={editData.shortUrl}
                         onChange={handleEditChange}
-                        className="w-full px-2 py-1 rounded"
+                        className="w-full px-2 py-1 rounded bg-white text-blue-900 border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900 dark:focus:ring-blue-600"
                       />
                     </td>
                     <td className="py-2 px-4 border-b text-center">
@@ -277,13 +254,13 @@ function Shorturls() {
                     <td className="py-2 px-4 border-b text-center">
                       <button
                         onClick={() => handleEditSave(url._id)}
-                        className="bg-blue-600 text-white px-3 py-1 rounded mr-2"
+                        className="bg-blue-600 text-white px-3 py-1 rounded mr-2 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800"
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setEditId(null)}
-                        className="bg-gray-400 text-white px-3 py-1 rounded"
+                        className="bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600"
                       >
                         Cancel
                       </button>
@@ -309,11 +286,7 @@ function Shorturls() {
                     name="fullUrl"
                     value={newUrl.fullUrl}
                     onChange={handleNewChange}
-                    className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
-                      theme === "dark"
-                        ? "bg-gray-800 text-white border-blue-900 focus:ring-blue-500"
-                        : "bg-white text-black border-blue-200 focus:ring-blue-400"
-                    } transition`}
+                    className="w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-white text-black border-blue-200 focus:ring-blue-400 dark:bg-gray-800 dark:text-white dark:border-blue-900 dark:focus:ring-blue-500 transition"
                     placeholder="Paste the full URL here"
                     autoFocus
                   />
@@ -323,11 +296,7 @@ function Shorturls() {
                     name="shortUrl"
                     value={newUrl.shortUrl}
                     onChange={handleNewChange}
-                    className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
-                      theme === "dark"
-                        ? "bg-gray-800 text-white border-blue-900 focus:ring-red-500"
-                        : "bg-white text-black border-blue-200 focus:ring-red-400"
-                    } transition`}
+                    className="w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-white text-black border-blue-200 focus:ring-red-400 dark:bg-gray-800 dark:text-white dark:border-blue-900 dark:focus:ring-red-500 transition"
                     placeholder="Custom short code (optional)"
                   />
                 </td>
@@ -338,7 +307,7 @@ function Shorturls() {
                   <div className="flex gap-2 justify-center">
                     <button
                       onClick={handleCreate}
-                      className="inline-flex items-center gap-1 bg-gradient-to-r from-green-500 to-blue-500 hover:from-blue-500 hover:to-green-500 text-white px-4 py-2 rounded-lg shadow font-semibold transition min-w-[110px] justify-center"
+                      className="inline-flex items-center gap-1 bg-gradient-to-r from-green-500 to-blue-500 hover:from-blue-500 hover:to-green-500 text-white px-4 py-2 rounded-lg shadow font-semibold transition min-w-[110px] justify-center dark:from-green-700 dark:to-blue-700 dark:hover:from-blue-700 dark:hover:to-green-700"
                       style={{ minWidth: "110px" }}
                     >
                       <svg
@@ -358,7 +327,7 @@ function Shorturls() {
                     </button>
                     <button
                       onClick={() => setCreating(false)}
-                      className="inline-flex items-center gap-1 bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-semibold transition min-w-[110px] justify-center"
+                      className="inline-flex items-center gap-1 bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-semibold transition min-w-[110px] justify-center dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200"
                       style={{ minWidth: "110px" }}
                     >
                       <svg
@@ -390,7 +359,7 @@ function Shorturls() {
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold disabled:opacity-50"
+            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold disabled:opacity-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200"
           >
             Prev
           </button>
@@ -400,8 +369,8 @@ function Shorturls() {
               onClick={() => setCurrentPage(idx + 1)}
               className={`px-3 py-1 rounded font-semibold ${
                 currentPage === idx + 1
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-blue-100"
+                  ? "bg-blue-600 text-white dark:bg-blue-700"
+                  : "bg-gray-100 text-gray-700 hover:bg-blue-100 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-blue-900"
               }`}
             >
               {idx + 1}
@@ -410,7 +379,7 @@ function Shorturls() {
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold disabled:opacity-50"
+            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold disabled:opacity-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200"
           >
             Next
           </button>
@@ -421,9 +390,7 @@ function Shorturls() {
         {userData.user.verified && !creating && (
           <button
             onClick={() => setCreating(true)}
-            className={`inline-block bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-lg shadow hover:from-red-600 hover:to-blue-600 transition font-semibold ${
-              theme === "dark" ? "border border-blue-900" : ""
-            }`}
+            className={`inline-block bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-lg shadow hover:from-red-600 hover:to-blue-600 transition font-semibold border border-blue-900 dark:border-blue-900`}
           >
             <svg
               className="w-5 h-5 inline-block mr-2"
@@ -444,9 +411,7 @@ function Shorturls() {
         {!userData.user.verified && (
           <Link
             to="/profile"
-            className={`inline-block bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-lg shadow hover:from-red-600 hover:to-blue-600 transition font-semibold ${
-              theme === "dark" ? "border border-blue-900" : ""
-            }`}
+            className={`inline-block bg-gradient-to-r from-blue-600 to-red-500 text-white px-6 py-2 rounded-lg shadow hover:from-red-600 hover:to-blue-600 transition font-semibold border border-blue-900 dark:border-blue-900`}
           >
             Verify Email
           </Link>

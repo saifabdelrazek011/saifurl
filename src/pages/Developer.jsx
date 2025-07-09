@@ -123,22 +123,10 @@ const Developer = () => {
   };
 
   return (
-    <div
-      className={`min-h-screen ${
-        theme === "dark"
-          ? "bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900"
-          : "bg-gradient-to-br from-blue-700 via-white to-red-600"
-      } transition-colors duration-300`}
-    >
+    <div className="min-h-screen bg-gradient-to-br from-blue-700 via-white to-red-600 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 transition-colors duration-300">
       <div className="max-w-3xl mx-auto py-12 px-4">
         {/* Header */}
-        <div
-          className={`flex flex-col md:flex-row justify-between items-center mb-8 ${
-            theme === "dark"
-              ? "bg-gradient-to-r from-gray-800 to-blue-900"
-              : "bg-gradient-to-r from-blue-600 to-red-500"
-          } rounded-xl shadow-xl p-6 border-4 border-white`}
-        >
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 bg-gradient-to-r from-blue-600 to-red-500 dark:from-gray-800 dark:to-blue-900 rounded-xl shadow-xl p-6 border-4 border-white">
           <div>
             <h1 className="text-4xl font-extrabold text-white mb-1 drop-shadow">
               Developer API
@@ -150,25 +138,14 @@ const Developer = () => {
           </div>
           <button
             onClick={toggleTheme}
-            className={`mt-4 md:mt-0 px-4 py-2 rounded-lg font-semibold shadow transition ${
-              theme === "dark"
-                ? "bg-blue-700 text-white hover:bg-blue-600"
-                : "bg-white text-blue-700 hover:bg-blue-100"
-            }`}
+            className="mt-4 md:mt-0 px-4 py-2 rounded-lg font-semibold shadow transition bg-white text-blue-700 hover:bg-blue-100 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-600"
             aria-label="Toggle theme"
           >
             {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
           </button>
         </div>
-
         {/* API Key Section */}
-        <div
-          className={`rounded-xl shadow-lg p-8 mb-8 ${
-            theme === "dark"
-              ? "bg-gradient-to-br from-blue-900 via-gray-900 to-gray-800 text-blue-100"
-              : "bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900"
-          }`}
-        >
+        <div className="rounded-xl shadow-lg p-8 mb-8 bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900 dark:from-blue-900 dark:via-gray-900 dark:to-gray-800 dark:text-blue-100">
           <h2 className="text-2xl font-bold mb-4">Your API Key</h2>
           {loading ? (
             <div className="text-center py-8">Loading...</div>
@@ -179,29 +156,17 @@ const Developer = () => {
                   type={showKey ? "text" : "password"}
                   value={apiKey}
                   readOnly
-                  className={`flex-1 px-3 py-2 rounded-lg border font-mono text-sm ${
-                    theme === "dark"
-                      ? "bg-gray-800 text-blue-100 border-blue-900"
-                      : "bg-white text-blue-900 border-blue-200"
-                  }`}
+                  className="flex-1 px-3 py-2 rounded-lg border font-mono text-sm bg-white text-blue-900 border-blue-200 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900"
                 />
                 <button
                   onClick={() => setShowKey((v) => !v)}
-                  className={`px-3 py-2 rounded-lg font-semibold shadow transition ${
-                    theme === "dark"
-                      ? "bg-blue-700 text-white hover:bg-blue-600"
-                      : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-                  }`}
+                  className="px-3 py-2 rounded-lg font-semibold shadow transition bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-600"
                 >
                   {showKey ? "Hide" : "Show"}
                 </button>
                 <button
                   onClick={handleCopy}
-                  className={`px-3 py-2 rounded-lg font-semibold shadow transition ${
-                    theme === "dark"
-                      ? "bg-blue-700 text-white hover:bg-blue-600"
-                      : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-                  }`}
+                  className="px-3 py-2 rounded-lg font-semibold shadow transition bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-600"
                 >
                   Copy
                 </button>
@@ -210,22 +175,14 @@ const Developer = () => {
                 <button
                   onClick={handleUpdate}
                   disabled={actionLoading}
-                  className={`px-4 py-2 rounded-lg font-semibold transition ${
-                    theme === "dark"
-                      ? "bg-yellow-600 text-white hover:bg-yellow-700"
-                      : "bg-yellow-400 text-white hover:bg-yellow-500"
-                  }`}
+                  className="px-4 py-2 rounded-lg font-semibold transition bg-yellow-400 text-white hover:bg-yellow-500 dark:bg-yellow-600 dark:hover:bg-yellow-700"
                 >
                   {actionLoading ? "Regenerating..." : "Regenerate"}
                 </button>
                 <button
                   onClick={handleDelete}
                   disabled={actionLoading}
-                  className={`px-4 py-2 rounded-lg font-semibold transition ${
-                    theme === "dark"
-                      ? "bg-red-600 text-white hover:bg-red-700"
-                      : "bg-red-500 text-white hover:bg-red-600"
-                  }`}
+                  className="px-4 py-2 rounded-lg font-semibold transition bg-red-500 text-white hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700"
                 >
                   {actionLoading ? "Deleting..." : "Delete"}
                 </button>
@@ -239,11 +196,7 @@ const Developer = () => {
               <button
                 onClick={handleCreate}
                 disabled={actionLoading}
-                className={`px-6 py-3 rounded-lg font-semibold transition ${
-                  theme === "dark"
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
-                }`}
+                className="px-6 py-3 rounded-lg font-semibold transition bg-blue-600 text-white hover:bg-blue-700"
               >
                 {actionLoading ? "Creating..." : "Create API Key"}
               </button>
@@ -259,35 +212,16 @@ const Developer = () => {
           )}
         </div>
         {/* API Usage Section */}
-        <div
-          className={`rounded-xl shadow-lg p-8 mb-3 ${
-            theme === "dark"
-              ? "bg-gradient-to-br from-gray-900 via-blue-900 to-gray-800 text-blue-100"
-              : "bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900"
-          }`}
-        >
+        <div className="rounded-xl shadow-lg p-8 mb-3 bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900 dark:from-gray-900 dark:via-blue-900 dark:to-gray-800 dark:text-blue-100">
           <h2 className="text-2xl font-bold mb-4">API Usage</h2>
           <p className="mb-2">
-            Use your API key as a <span className="font-mono">apiKey</span>{" "}
-            query parameter:
+            Use your API key as a <span className="font-mono">apiKey</span> query parameter:
           </p>
-          <pre
-            className={`rounded p-4 overflow-x-auto text-sm ${
-              theme === "dark"
-                ? "bg-gray-800 text-blue-100"
-                : "bg-gray-100 text-blue-900"
-            }`}
-          >
+          <pre className="rounded p-4 overflow-x-auto text-sm bg-gray-100 text-blue-900 dark:bg-gray-800 dark:text-blue-100">
             {`?apiKey=YOUR_API_KEY`}
           </pre>
           <p className="mt-4 mb-2 font-semibold">Example: Create a short URL</p>
-          <pre
-            className={`rounded p-4 overflow-x-auto text-sm ${
-              theme === "dark"
-                ? "bg-gray-800 text-blue-100"
-                : "bg-gray-100 text-blue-900"
-            }`}
-          >
+          <pre className="rounded p-4 overflow-x-auto text-sm bg-gray-100 text-blue-900 dark:bg-gray-800 dark:text-blue-100">
             {`POST ${apiUrl}/shorturls?apiKey=YOUR_API_KEY
 Content-Type: application/json
 
@@ -298,16 +232,8 @@ Body:
 }
 `}
           </pre>
-          <p className="mt-4 mb-2 font-semibold">
-            Example: Get your short URLs
-          </p>
-          <pre
-            className={`rounded p-4 overflow-x-auto text-sm ${
-              theme === "dark"
-                ? "bg-gray-800 text-blue-100"
-                : "bg-gray-100 text-blue-900"
-            }`}
-          >
+          <p className="mt-4 mb-2 font-semibold">Example: Get your short URLs</p>
+          <pre className="rounded p-4 overflow-x-auto text-sm bg-gray-100 text-blue-900 dark:bg-gray-800 dark:text-blue-100">
             {`GET ${apiUrl}/shorturls?apiKey=YOUR_API_KEY
             
 Response:
@@ -325,16 +251,8 @@ Response:
 },...
 ]}`}
           </pre>
-          <p className="mt-4 mb-2 font-semibold">
-            Example: Get a specific short URL
-          </p>
-          <pre
-            className={`rounded p-4 overflow-x-auto text-sm ${
-              theme === "dark"
-                ? "bg-gray-800 text-blue-100"
-                : "bg-gray-100 text-blue-900"
-            }`}
-          >
+          <p className="mt-4 mb-2 font-semibold">Example: Get a specific short URL</p>
+          <pre className="rounded p-4 overflow-x-auto text-sm bg-gray-100 text-blue-900 dark:bg-gray-800 dark:text-blue-100">
             {`GET ${apiUrl}/shorturls/YOUR_SHORT_URL_ID?apiKey=YOUR_API_KEY
 Response:
 {
@@ -351,13 +269,7 @@ Response:
 }`}
           </pre>
           <p className="mt-4 mb-2 font-semibold">Example: Update a short URL</p>
-          <pre
-            className={`rounded p-4 overflow-x-auto text-sm ${
-              theme === "dark"
-                ? "bg-gray-800 text-blue-100"
-                : "bg-gray-100 text-blue-900"
-            }`}
-          >
+          <pre className="rounded p-4 overflow-x-auto text-sm bg-gray-100 text-blue-900 dark:bg-gray-800 dark:text-blue-100">
             {`PATCH ${apiUrl}/shorturls/YOUR_SHORT_URL_ID?apiKey=YOUR_API_KEY
 Content-Type: application/json
 Body:
@@ -379,15 +291,8 @@ Response:
   }
 }`}
           </pre>
-
           <p className="mt-4 mb-2 font-semibold">Example: Delete a short URL</p>
-          <pre
-            className={`rounded p-4 overflow-x-auto text-sm ${
-              theme === "dark"
-                ? "bg-gray-800 text-blue-100"
-                : "bg-gray-100 text-blue-900"
-            }`}
-          >
+          <pre className="rounded p-4 overflow-x-auto text-sm bg-gray-100 text-blue-900 dark:bg-gray-800 dark:text-blue-100">
             {`DELETE ${apiUrl}/shorturls/YOUR_SHORT_URL_ID?apiKey=YOUR_API_KEY
 
 Response:
@@ -399,38 +304,23 @@ Response:
         <div className="mb-8 flex justify-end">
           <Link
             to="/dashboard"
-            className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-              theme === "dark"
-                ? "bg-blue-900 text-white hover:bg-blue-700"
-                : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-            }`}
+            className="px-4 py-2 rounded-lg font-semibold shadow transition flex items-center gap-2 bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-white dark:hover:bg-blue-700"
             aria-label="Dashboard"
           >
-            ← Back to Dashboard
+            Back to dashboard
           </Link>
         </div>
       </div>
       {/* Footer */}
-
-      <footer
-        className={`text-center text-sm mt-16 py-6 rounded-t-xl shadow-inner ${
-          theme === "dark"
-            ? "bg-gradient-to-r from-blue-950/90 to-red-950/90 text-gray-400"
-            : "bg-gradient-to-r from-blue-900/80 to-red-900/80 text-gray-300"
-        }`}
-      >
+      <footer className="text-center text-sm mt-16 py-6 rounded-t-xl shadow-inner bg-gradient-to-r from-blue-900/80 to-red-900/80 text-gray-300 dark:from-blue-950/90 dark:to-red-950/90 dark:text-gray-400">
         <div className="flex flex-col md:flex-row gap-2 justify-center items-center">
           <span>
-            Made with <span className="text-red-400">❤️</span> by{" "}
+            Made with <span className="text-red-400">❤️</span> by{' '}
             <a
               href="https://saifabdelrazek.com"
               target="_blank"
               rel="noopener noreferrer"
-              className={`hover:underline font-semibold ${
-                theme === "dark"
-                  ? "text-blue-300 hover:text-red-300"
-                  : "text-blue-300 hover:text-red-400"
-              }`}
+              className="hover:underline font-semibold text-blue-300 hover:text-red-400 dark:text-blue-300 dark:hover:text-red-300"
             >
               Saif Abdelrazek
             </a>
@@ -439,12 +329,10 @@ Response:
         </div>
         <div className="mt-2">
           <span>
-            Found an issue? Contact{" "}
+            Found an issue? Contact{' '}
             <a
               href="mailto:dev@saifabdelrazek.com"
-              className={`hover:underline ${
-                theme === "dark" ? "text-blue-300" : "text-blue-600"
-              }`}
+              className="hover:underline text-blue-600 dark:text-blue-300"
             >
               dev@saifabdelrazek.com
             </a>
@@ -455,9 +343,7 @@ Response:
             href="https://github.com/saifabdelrazek011/saifurl"
             target="_blank"
             rel="noopener noreferrer"
-            className={`hover:underline ${
-              theme === "dark" ? "text-blue-300" : "text-blue-600"
-            }`}
+            className="hover:underline text-blue-600 dark:text-blue-300"
           >
             GitHub
           </a>
@@ -466,9 +352,7 @@ Response:
             href="https://saifabdelrazek.com"
             target="_blank"
             rel="noopener noreferrer"
-            className={`hover:underline ${
-              theme === "dark" ? "text-blue-300" : "text-blue-600"
-            }`}
+            className="hover:underline text-blue-600 dark:text-blue-300"
           >
             Portfolio
           </a>

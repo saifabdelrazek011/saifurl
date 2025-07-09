@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDashboardContext } from "../contexts/DashboardContext";
 
 function SignoutBtn() {
-  const { setUser, apiUrl, refreshUserData, theme } = useDashboardContext();
+  const { setUser, apiUrl, refreshUserData } = useDashboardContext();
   const [loadingSignOut, setLoadingSignOut] = useState(false);
 
   const handleSignout = async () => {
@@ -19,11 +19,9 @@ function SignoutBtn() {
   return (
     <button
       onClick={!loadingSignOut ? handleSignout : null}
-      className={`w-full md:w-auto px-4 py-2 rounded-lg font-semibold shadow transition ${
-        theme === "dark"
-          ? "bg-red-700 text-white hover:bg-red-600"
-          : "bg-red-600 text-white hover:bg-red-700"
-      } ${loadingSignOut ? "cursor-not-allowed opacity-75" : ""}`}
+      className={`w-full md:w-auto px-4 py-2 rounded-lg font-semibold shadow transition bg-red-600 text-white hover:bg-red-700 dark:bg-red-700 dark:text-white dark:hover:bg-red-600 ${
+        loadingSignOut ? "cursor-not-allowed opacity-75" : ""
+      }`}
       disabled={loadingSignOut}
     >
       {loadingSignOut ? (

@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDashboardContext } from "../contexts/DashboardContext";
 import { useNavigate } from "react-router-dom";
 
@@ -136,13 +136,7 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div
-        className={`min-h-screen flex items-center justify-center ${
-          theme === "dark"
-            ? "bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900"
-            : "bg-gradient-to-br from-blue-50 via-white to-red-100"
-        }`}
-      >
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-red-100 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
         <div className="bg-white rounded-xl shadow-lg p-8 text-center">
           <h2 className="text-2xl font-bold text-red-600 mb-2">
             Not Signed In
@@ -188,21 +182,9 @@ const Profile = () => {
   };
 
   return (
-    <div
-      className={`min-h-screen ${
-        theme === "dark"
-          ? "bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900"
-          : "bg-gradient-to-br from-blue-700 via-white to-red-600"
-      } transition-colors duration-300`}
-    >
+    <div className="min-h-screen bg-gradient-to-br from-blue-700 via-white to-red-600 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 transition-colors duration-300">
       <div className="max-w-2xl mx-auto py-12 px-4">
-        <div
-          className={`flex flex-col md:flex-row justify-between items-center mb-6 ${
-            theme === "dark"
-              ? "bg-gradient-to-r from-gray-800 to-blue-900"
-              : "bg-gradient-to-r from-blue-600 to-red-500"
-          } rounded-xl shadow-xl p-6 border-4 border-white`}
-        >
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 bg-gradient-to-r from-blue-600 to-red-500 dark:from-gray-800 dark:to-blue-900 rounded-xl shadow-xl p-6 border-4 border-white">
           <div>
             <h1 className="text-4xl font-extrabold text-white mb-1 drop-shadow">
               Profile
@@ -233,30 +215,15 @@ const Profile = () => {
           </a>
           <button
             onClick={toggleTheme}
-            className={`mt-4 md:mt-0 px-4 py-2 rounded-lg font-semibold shadow transition ${
-              theme === "dark"
-                ? "bg-blue-700 text-white hover:bg-blue-600"
-                : "bg-white text-blue-700 hover:bg-blue-100"
-            }`}
+            className="mt-4 md:mt-0 px-4 py-2 rounded-lg font-semibold shadow transition bg-white text-blue-700 hover:bg-blue-100 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-600"
             aria-label="Toggle theme"
           >
             {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
           </button>
         </div>
-        <div
-          className={`w-full mx-auto rounded-xl shadow-lg p-1 ${
-            theme === "dark"
-              ? "bg-gradient-to-br from-blue-900 via-gray-900 to-gray-800"
-              : "bg-gradient-to-br from-blue-50 via-white to-red-100"
-          }`}
-        >
+        <div className="w-full mx-auto rounded-xl shadow-lg p-1 bg-gradient-to-br from-blue-50 via-white to-red-100 dark:from-blue-900 dark:via-gray-900 dark:to-gray-800">
           <form
-            className={
-              "space-y-6 text-lg rounded-xl p-8 " +
-              (theme === "dark"
-                ? "bg-gray-900 text-blue-100"
-                : "bg-white text-blue-900")
-            }
+            className="space-y-6 text-lg rounded-xl p-8 bg-white text-blue-900 dark:bg-gray-900 dark:text-blue-100"
             onSubmit={async (e) => {
               e.preventDefault();
               setLoading(true);
@@ -274,10 +241,7 @@ const Profile = () => {
           >
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">
               <label
-                className={
-                  "font-semibold w-40 inline-block " +
-                  (theme === "dark" ? "text-blue-100" : "text-blue-900")
-                }
+                className="font-semibold w-40 inline-block text-blue-900 dark:text-blue-100"
                 htmlFor="firstName"
               >
                 First Name:
@@ -288,19 +252,12 @@ const Profile = () => {
                 type="text"
                 value={formData.firstName}
                 onChange={handleChange}
-                className={`flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
-                  theme === "dark"
-                    ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
-                    : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
-                }`}
+                className="flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-white text-blue-900 border-blue-200 focus:ring-blue-400 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900 dark:focus:ring-blue-600"
               />
             </div>
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">
               <label
-                className={
-                  "font-semibold w-40 inline-block " +
-                  (theme === "dark" ? " text-blue-100" : " text-blue-900")
-                }
+                className="font-semibold w-40 inline-block text-blue-900 dark:text-blue-100"
                 htmlFor="lastName"
               >
                 Last Name:
@@ -311,11 +268,7 @@ const Profile = () => {
                 type="text"
                 value={formData.lastName}
                 onChange={handleChange}
-                className={`flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
-                  theme === "dark"
-                    ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
-                    : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
-                }`}
+                className="flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-white text-blue-900 border-blue-200 focus:ring-blue-400 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900 dark:focus:ring-blue-600"
               />
             </div>
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">
@@ -332,11 +285,7 @@ const Profile = () => {
                 value={formData.email}
                 onChange={handleChange}
                 readOnly
-                className={`flex-1 px-3 py-2 border rounded transition-all duration-300 ${
-                  theme === "dark"
-                    ? "bg-gray-800/50 border-gray-700 text-gray-400 cursor-not-allowed opacity-60"
-                    : "bg-gray-100/70 border-gray-300 text-gray-500 cursor-not-allowed opacity-75"
-                }`}
+                className="flex-1 px-3 py-2 border rounded transition-all duration-300 bg-gray-100/70 border-gray-300 text-gray-500 cursor-not-allowed opacity-75 dark:bg-gray-800/50 dark:border-gray-700 dark:text-gray-400 dark:cursor-not-allowed dark:opacity-60"
               />
             </div>
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">
@@ -352,11 +301,7 @@ const Profile = () => {
                 type="text"
                 value={formData.username}
                 onChange={handleChange}
-                className={`flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
-                  theme === "dark"
-                    ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
-                    : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
-                }`}
+                className="flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-white text-blue-900 border-blue-200 focus:ring-blue-400 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900 dark:focus:ring-blue-600"
               />
             </div>
             <div className="flex flex-col md:flex-row md:items-center md:gap-4">
@@ -379,11 +324,7 @@ const Profile = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 ${
-                  theme === "dark"
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-red-500 hover:bg-red-600"
-                }`}
+                className="px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 bg-red-500 hover:bg-red-600 dark:bg-blue-600 dark:hover:bg-blue-700"
               >
                 {loading ? "Saving..." : "Save Changes"}
               </button>
@@ -395,11 +336,7 @@ const Profile = () => {
       <div className="max-w-2xl mx-auto py-6 px-4">
         <form
           onSubmit={handlePasswordSubmit}
-          className={`rounded-xl shadow-lg p-8 mt-4 ${
-            theme === "dark"
-              ? "bg-gradient-to-br from-blue-900 via-gray-900 to-gray-800 text-blue-100"
-              : "bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900"
-          }`}
+          className="rounded-xl shadow-lg p-8 mt-4 bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900 dark:from-blue-900 dark:via-gray-900 dark:to-gray-800 dark:text-blue-100"
         >
           <label className="text-lg font-semibold block mb-4">
             Change Password
@@ -418,11 +355,7 @@ const Profile = () => {
                 name="currentPassword"
                 value={passwordData.currentPassword}
                 onChange={handlePasswordChange}
-                className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
-                  theme === "dark"
-                    ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
-                    : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
-                }`}
+                className="w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-white text-blue-900 border-blue-200 focus:ring-blue-400 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900 dark:focus:ring-blue-600"
                 placeholder="Enter your current password"
                 required
               />
@@ -437,11 +370,7 @@ const Profile = () => {
                 name="newPassword"
                 value={passwordData.newPassword}
                 onChange={handlePasswordChange}
-                className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
-                  theme === "dark"
-                    ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
-                    : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
-                }`}
+                className="w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-white text-blue-900 border-blue-200 focus:ring-blue-400 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900 dark:focus:ring-blue-600"
                 placeholder="Enter your new password"
                 required
               />
@@ -459,11 +388,7 @@ const Profile = () => {
                 name="confirmNewPassword"
                 value={passwordData.confirmNewPassword}
                 onChange={handlePasswordChange}
-                className={`w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 ${
-                  theme === "dark"
-                    ? "bg-gray-800 text-blue-100 border-blue-900 focus:ring-blue-600"
-                    : "bg-white text-blue-900 border-blue-200 focus:ring-blue-400"
-                }`}
+                className="w-full px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 bg-white text-blue-900 border-blue-200 focus:ring-blue-400 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900 dark:focus:ring-blue-600"
                 placeholder="Confirm your new password"
                 required
               />
@@ -492,11 +417,7 @@ const Profile = () => {
               <button
                 type="submit"
                 disabled={pwLoading}
-                className={`px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 ${
-                  theme === "dark"
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-red-500 hover:bg-red-600"
-                }`}
+                className="px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 bg-red-500 hover:bg-red-600 dark:bg-blue-600 dark:hover:bg-blue-700"
               >
                 {pwLoading ? "Changing..." : "Change Password"}
               </button>
@@ -507,13 +428,7 @@ const Profile = () => {
       {/* Account Verification Section */}
       {user.verified ? (
         <div className="max-w-2xl mx-auto py-6 px-4">
-          <div
-            className={`rounded-xl shadow-lg p-8 flex flex-col items-center ${
-              theme === "dark"
-                ? "bg-gradient-to-br from-blue-900 via-gray-900 to-gray-800 text-blue-100"
-                : "bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900"
-            }`}
-          >
+          <div className="rounded-xl shadow-lg p-8 flex flex-col items-center bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900 dark:from-blue-900 dark:via-gray-900 dark:to-gray-800 dark:text-blue-100">
             <svg
               className="w-10 h-10 text-green-500 mb-2"
               fill="none"
@@ -536,13 +451,7 @@ const Profile = () => {
         </div>
       ) : (
         <div className="max-w-2xl mx-auto py-6 px-4">
-          <div
-            className={`rounded-xl shadow-lg p-8 flex flex-col items-center ${
-              theme === "dark"
-                ? "bg-gradient-to-br from-blue-900 via-gray-900 to-gray-800 text-blue-100"
-                : "bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900"
-            }`}
-          >
+          <div className="rounded-xl shadow-lg p-8 flex flex-col items-center bg-gradient-to-br from-blue-50 via-white to-red-100 text-blue-900 dark:from-blue-900 dark:via-gray-900 dark:to-gray-800 dark:text-blue-100">
             <svg
               className="w-10 h-10 text-yellow-400 mb-2"
               fill="none"
@@ -550,6 +459,13 @@ const Profile = () => {
               strokeWidth={2}
               viewBox="0 0 24 24"
             >
+              <button
+                onClick={toggleTheme}
+                className="mt-4 md:mt-0 px-4 py-2 rounded-lg font-semibold shadow transition bg-white text-blue-700 hover:bg-blue-100 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-600"
+                aria-label="Toggle theme"
+              >
+                Toggle Theme
+              </button>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -593,7 +509,9 @@ const Profile = () => {
                             try {
                               const text = await response.text();
                               data = text ? JSON.parse(text) : null;
-                            } catch {}
+                            } catch (error) {
+                              console.error("Failed to parse error response");
+                            }
                             throw new Error(
                               (data && data.message) ||
                                 "Failed to send verification email."
@@ -612,10 +530,7 @@ const Profile = () => {
                         }
                       }
                 }
-                className={`mt-2 px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 ${
-                  theme === "dark"
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-red-500 hover:bg-red-600"
+                className={`mt-2 px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 dark:bg-blue-600 hover:bg-blue-700 bg-red-500 hover:bg-red-600"
                 }`}
               >
                 {loading ? "Sending..." : "Send Verification Email"}
@@ -644,22 +559,14 @@ const Profile = () => {
                   id="providedCode"
                   value={providedCode}
                   onChange={(e) => setProvidedCode(e.target.value)}
-                  className={`mb-2 p-2 rounded-md border w-64 ${
-                    theme === "dark"
-                      ? "bg-gray-800 text-blue-100 border-blue-900"
-                      : "bg-white text-blue-900 border-blue-200"
-                  }`}
+                  className="mb-2 p-2 rounded-md border w-64 bg-white text-blue-900 border-blue-200 dark:bg-gray-800 dark:text-blue-100 dark:border-blue-900"
                   placeholder="Enter the code from your email"
                   required
                 />
                 <button
                   type="submit"
                   disabled={loadingCode}
-                  className={`px-6 py-2 rounded-lg text-white font-semibold transition-colors duration-300 ${
-                    theme === "dark"
-                      ? "bg-blue-600 hover:bg-blue-700"
-                      : "bg-red-500 hover:bg-red-600"
-                  }`}
+                  className="px-6 py-2 rounded-lg text-white font-semibold transition-colors duration-300 bg-red-500 hover:bg-red-600 dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
                   {loadingCode ? "Verifying..." : "Verify Code"}
                 </button>
@@ -671,23 +578,15 @@ const Profile = () => {
       <div className="max-w-2xl mx-auto py-6 px-4">
         <button
           onClick={() => navigate("/dashboard")}
-          className={`px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 ${
-            theme === "dark"
-              ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-red-500 hover:bg-red-600"
-          }`}
+          className="px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 bg-red-500 hover:bg-red-600 dark:bg-blue-600 dark:hover:bg-blue-700"
         >
           Back to Dashboard
         </button>
         <button
           onClick={() => navigate("/contact")}
-          className={`ml-4 px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 ${
-            theme === "dark"
-              ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-red-500 hover:bg-red-600"
-          }`}
+          className="ml-4 px-6 py-3 rounded-lg text-white font-semibold transition-colors duration-300 bg-red-500 hover:bg-red-600 dark:bg-blue-600 dark:hover:bg-blue-700"
         >
-          Contact us
+          Contact Support
         </button>
       </div>
     </div>

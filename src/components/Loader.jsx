@@ -1,17 +1,11 @@
 import React from "react";
 
-const Loader = ({ text = "Loading...", className = "", theme }) => (
+const Loader = ({ text = "Loading...", className = "" }) => (
   <div
-    className={`flex flex-col items-center justify-center min-h-screen w-full ${
-      theme === "dark"
-        ? "bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900"
-        : "bg-gradient-to-br from-blue-100 via-white to-blue-200"
-    } ${className}`}
+    className={`flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-br from-blue-100 via-white to-blue-200 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900 ${className}`}
   >
     <svg
-      className={`animate-spin h-14 w-14 mb-6 ${
-        theme === "dark" ? "text-blue-400" : "text-blue-600"
-      }`}
+      className="animate-spin h-14 w-14 mb-6 text-blue-600 dark:text-blue-400"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -30,18 +24,10 @@ const Loader = ({ text = "Loading...", className = "", theme }) => (
         d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
       />
     </svg>
-    <h1
-      className={`text-3xl font-extrabold mb-2 tracking-wide ${
-        theme === "dark" ? "text-blue-200" : "text-blue-700"
-      }`}
-    >
+    <h1 className="text-3xl font-extrabold mb-2 tracking-wide text-blue-700 dark:text-blue-200">
       SaifURL
     </h1>
-    <span
-      className={`font-semibold text-lg ${
-        theme === "dark" ? "text-blue-100" : "text-blue-700"
-      }`}
-    >
+    <span className="font-semibold text-lg text-blue-700 dark:text-blue-100">
       {text}
     </span>
   </div>

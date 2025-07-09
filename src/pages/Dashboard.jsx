@@ -116,55 +116,35 @@ function Dashboard() {
               </a>
               <Link
                 to="/developer"
-                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-                  theme === "dark"
-                    ? "bg-blue-900 text-white hover:bg-blue-700"
-                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-                }`}
+                className="px-4 py-2 rounded-lg font-semibold shadow transition bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-white dark:hover:bg-blue-700"
                 aria-label="Developer"
               >
                 Developer
               </Link>
               <Link
                 to="/profile"
-                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-                  theme === "dark"
-                    ? "bg-blue-900 text-white hover:bg-blue-700"
-                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-                }`}
+                className="px-4 py-2 rounded-lg font-semibold shadow transition bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-white dark:hover:bg-blue-700"
                 aria-label="Profile"
               >
                 Profile
               </Link>
               <Link
                 to="/contact"
-                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-                  theme === "dark"
-                    ? "bg-blue-900 text-white hover:bg-blue-700"
-                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-                }`}
+                className="px-4 py-2 rounded-lg font-semibold shadow transition bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-white dark:hover:bg-blue-700"
                 aria-label="Contact"
               >
                 Contact
               </Link>
               <Link
                 to="/bots"
-                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-                  theme === "dark"
-                    ? "bg-blue-900 text-white hover:bg-blue-700"
-                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-                }`}
+                className="px-4 py-2 rounded-lg font-semibold shadow transition bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-white dark:hover:bg-blue-700"
                 aria-label="Bots"
               >
                 Bots
               </Link>
               <button
                 onClick={toggleTheme}
-                className={`px-4 py-2 rounded-lg font-semibold shadow transition ${
-                  theme === "dark"
-                    ? "bg-blue-700 text-white hover:bg-blue-600"
-                    : "bg-white text-blue-700 hover:bg-blue-100"
-                }`}
+                className="px-4 py-2 rounded-lg font-semibold shadow transition bg-white text-blue-700 hover:bg-blue-100 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-600"
                 aria-label="Toggle theme"
               >
                 {theme === "dark" ? "🌙" : "☀️"}
@@ -286,13 +266,9 @@ function Dashboard() {
             { domain: "sa.ix.tc", url: "https://sa.ix.tc" },
           ].map(({ domain }) => (
             <button
-              className={`transition text-base md:text-lg font-semibold px-4 md:px-6 py-3 rounded-lg shadow border-2 ${
-                theme === "dark"
-                  ? "bg-gray-900 hover:bg-blue-900 text-blue-200 border-blue-800 hover:border-red-700"
-                  : "bg-white/90 hover:bg-white text-blue-700 border-blue-200 hover:border-red-400"
-              } ${
+              className={`transition text-base md:text-lg font-semibold px-4 md:px-6 py-3 rounded-lg shadow border-2 bg-white/90 hover:bg-white text-blue-700 border-blue-200 hover:border-red-400 dark:bg-gray-900 dark:hover:bg-blue-900 dark:text-blue-200 dark:border-blue-800 dark:hover:border-red-700 ${
                 shortDomain === domain
-                  ? "border-red-500 bg-red-100 text-red-700"
+                  ? "border-red-500 bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200 dark:border-red-500"
                   : "border-blue-300 hover:border-red-500"
               }`}
               key={domain}
