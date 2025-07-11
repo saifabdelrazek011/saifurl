@@ -9,7 +9,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <DashboardProvider>
       <App />
-      <Analytics />
     </DashboardProvider>
   </StrictMode>
 );
